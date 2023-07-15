@@ -17,8 +17,8 @@ class Paddle {
         ctx.fillRect(this.x, this.y, this.width, this.height);
         // ctx.drawImage(
         //     this.image,
-        //     this.position.x,
-        //     this.position.y,
+        //     this.x,
+        //     this.y,
         //     this.width,
         //     this.height
         // );
@@ -48,9 +48,10 @@ class Ball {
     }
 }
 class Brick {
-    constructor(position) {
+    constructor(x, y) {
         this.image = document.getElementById("brick_brick");
-        this.position = position;
+        this.x = x;
+        this.y = y;
         this.width = 78;
         this.height = 18;
         this.broken = false;
@@ -60,8 +61,8 @@ class Brick {
         ctx.fillRect(this.x, this.y, this.width, this.height);
         // ctx.drawImage(
         //     this.image,
-        //     this.position.x,
-        //     this.position.y,
+        //     this.x,
+        //     this.y,
         //     this.width,
         //     this.height
         // );
@@ -95,8 +96,12 @@ function checkCrashPaddle(ball, paddle) {
 
 function checkCrashBrick(ball, brick) {
     var rst = { dx: 1, dy: 1 };
-    var inXCoordinate = ball.x > brick.x && ball.x < brick.x + brick.width;
-    var inYCoordinate = ball.y > brick.y && ball.y < brick.y + brick.height;
+    var inXCoordinate =
+        brick.x <= ball.x + ball.radius &&
+        ball.x - ball.radius <= brick.x + brick.width;
+    var inYCoordinate =
+        brick.y <= ball.y + ball.radius &&
+        ball.y - ball.radius <= brick.y + brick.height;
 
     if (
         inXCoordinate &&
@@ -104,7 +109,7 @@ function checkCrashBrick(ball, brick) {
         ball.y - ball.radius <= brick.y + brick.height
     ) {
         rst.dy = -1;
-        return rst;
+        // return rst;
     }
     if (
         inYCoordinate &&
@@ -112,7 +117,7 @@ function checkCrashBrick(ball, brick) {
         ball.x - ball.radius <= brick.x + brick.width
     ) {
         rst.dx = -1;
-        return rst;
+        // return rst;
     }
     return rst;
 }
@@ -122,21 +127,21 @@ var ball = new Ball();
 var bricks = [];
 
 var xspeed = 5;
-var yspeed = 5;
+var yspeed = -10;
 
 var gameStarted = false;
 
 for (var i = 0; i < 10; i++) {
     for (var j = 0; j < 5; j++) {
-        var brick = new Brick({ x: 80 * i, y: 20 * j });
+        var brick = new Brick(80 * i, 20 * j);
         brick.draw();
         bricks.push(brick);
     }
 }
 
-function removeBrick(bricks, x, y) {
+function removeBrick(bricks, b) {
     bricks.forEach((a, i, o) => {
-        if (a.x == x && a.y == y) {
+        if (a.x == b.x && a.y == b.y) {
             o.splice(i, 1);
         }
     });
@@ -166,7 +171,7 @@ function eachframe() {
     for (var i = 0; i < bricks.length; i++) {
         var rst = checkCrashBrick(ball, bricks[i]);
         if (rst.dx == -1 || rst.dy == -1) {
-            removeBrick(bricks[i].x, bricks[i].y);
+            removeBrick(bricks, bricks[i]);
         }
         xspeed *= rst.dx;
         yspeed *= rst.dy;
