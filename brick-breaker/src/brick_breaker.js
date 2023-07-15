@@ -5,7 +5,7 @@ class Paddle {
         this.width = 100;
         this.height = 20;
         this.x = canvas.width / 2 - this.width / 2;
-        this.y = canvas.height - this.height - 10;
+        this.y = canvas.height - this.height - 50;
         this.speed = 10;
     }
     draw() {
@@ -25,8 +25,6 @@ class Ball {
         this.x = canvas.width / 2;
         this.y = canvas.height / 2;
         this.speed = 5;
-        this.xspeed = 5;
-        this.yspeed = 5;
     }
     draw() {
         // ctx.fillStyle = "blue";
@@ -124,20 +122,64 @@ function removeBrick(bricks, b) {
     });
 }
 
+function levelLayout(level) {
+    var level0 = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
+        [0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    ];
+    var level1 = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 1, 1, 1, 1, 0, 0, 1],
+        [1, 0, 0, 1, 1, 1, 1, 0, 0, 1],
+        [1, 0, 0, 1, 1, 1, 1, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ];
+    var level2 = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ];
+
+    var levels = [level0, level1, level2];
+    var levelLayout = levels[level];
+    for (var i = 0; i < levelLayout.length; i++) {
+        for (var j = 0; j < levelLayout[0].length; j++) {
+            if (levelLayout[i][j] == 1) {
+                var brick = new Brick(80 * j + 1, 20 * i + 11);
+                bricks.push(brick);
+            }
+        }
+    }
+}
+
 function eachframe() {
     if (ball.y + ball.radius > canvas.height) {
+        // bottom
         gameStarted = false;
         // startButton.style.display = "block";
         return;
     }
-    if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+    if (
+        (ball.x - 2 * ball.radius < 0 && xspeed < 0) ||
+        (ball.x + 2 * ball.radius >= canvas.width && xspeed > 0)
+    ) {
+        // side
+
         xspeed *= -1;
     }
     if (ball.y - ball.radius < 0) {
+        // top
         yspeed *= -1;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#738285";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     for (var i = 0; i < bricks.length; i++) {
         var rst = checkCrashBrick(ball, bricks[i]);
@@ -154,7 +196,7 @@ function eachframe() {
     var rst = checkCrashPaddle(ball, paddle);
     xspeed *= rst.dx;
     yspeed *= rst.dy;
-    ball.move(xspeed, yspeed);
+    ball.move(xspeed + Math.random() * 4, yspeed);
 
     ball.draw();
     paddle.draw();
@@ -173,45 +215,32 @@ var ball = new Ball();
 var bricks = [];
 
 var xspeed = 5;
-var yspeed = -10;
+var yspeed = -9;
 
 var gameStarted = false;
 
-for (var i = 0; i < 10; i++) {
-    for (var j = 0; j < 5; j++) {
-        var brick = new Brick(80 * i, 20 * j);
-        bricks.push(brick);
-    }
-}
+// for (var i = 0; i < 10; i++) {
+//     for (var j = 0; j < 5; j++) {
+//         var brick = new Brick(80 * i + 1, 20 * j + 1);
+//         bricks.push(brick);
+//     }
+// }
+
+var startButton = document.getElementById("startButton");
+
+levelLayout(0);
+eachframe();
+
+// function startGame() {
+//     if (!gameStarted) {
+//         gameStarted = true;
+//         levelLayout(0); // Set up the bricks for the first level or desired level
+//         eachframe(); // Start the animation loop
+//     }
+// }
+
 canvas.addEventListener("mousemove", function (event) {
     var mouseX = event.clientX - canvas.offsetLeft;
     paddle.updatePosition(mouseX);
 });
-
-// window.onload = function () {
-//     function draw() {
-//         ctx.clearRect(0, 0, canvas.width, canvas.height);
-//         bricks.forEach((a) => {
-//             a.draw();
-//         });
-//         ball.draw();
-//         paddle.draw();
-//     }
-
-//     function update() {
-//         ball.move(xspeed, yspeed);
-//     }
-
-//     function gameLoop() {
-//         draw();
-//         update();
-//         requestAnimationFrame(gameLoop);
-//     }
-
-//     gameLoop();
-//     eachframe();
-// };
-
-// window.onload = eachframe;
-
-eachframe();
+// startButton.addEventListener("click", startGame);
