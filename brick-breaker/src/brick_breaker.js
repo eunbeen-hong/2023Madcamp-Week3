@@ -1,11 +1,7 @@
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-
-canvas.width = 800;
-canvas.height = 600;
-
 class Paddle {
     constructor() {
+        this.image = new Image();
+        this.image.src = "/assets/brick_paddle.png";
         this.width = 100;
         this.height = 20;
         this.x = canvas.width / 2 - this.width / 2;
@@ -13,15 +9,9 @@ class Paddle {
         this.speed = 10;
     }
     draw() {
-        ctx.fillStyle = "green";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.drawImage(
-        //     this.image,
-        //     this.x,
-        //     this.y,
-        //     this.width,
-        //     this.height
-        // );
+        // ctx.fillStyle = "green";
+        // ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
     updatePosition(mouseX) {
         this.x = mouseX - this.width / 2;
@@ -29,6 +19,8 @@ class Paddle {
 }
 class Ball {
     constructor() {
+        this.image = new Image();
+        this.image.src = "/assets/brick_ball.png";
         this.radius = 10;
         this.x = canvas.width / 2;
         this.y = canvas.height / 2;
@@ -37,10 +29,17 @@ class Ball {
         this.yspeed = 5;
     }
     draw() {
-        ctx.fillStyle = "blue";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-        ctx.fill();
+        // ctx.fillStyle = "blue";
+        // ctx.beginPath();
+        // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+        // ctx.fill();
+        ctx.drawImage(
+            this.image,
+            this.x,
+            this.y,
+            2 * this.radius,
+            2 * this.radius
+        );
     }
     move(xspeed, yspeed) {
         this.x += xspeed;
@@ -49,7 +48,8 @@ class Ball {
 }
 class Brick {
     constructor(x, y) {
-        this.image = document.getElementById("brick_brick");
+        this.image = new Image();
+        this.image.src = "/assets/brick_brick.png";
         this.x = x;
         this.y = y;
         this.width = 78;
@@ -57,15 +57,9 @@ class Brick {
         this.broken = false;
     }
     draw() {
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.drawImage(
-        //     this.image,
-        //     this.x,
-        //     this.y,
-        //     this.width,
-        //     this.height
-        // );
+        // ctx.fillStyle = "red";
+        // ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 }
 
@@ -122,23 +116,6 @@ function checkCrashBrick(ball, brick) {
     return rst;
 }
 
-var paddle = new Paddle();
-var ball = new Ball();
-var bricks = [];
-
-var xspeed = 5;
-var yspeed = -10;
-
-var gameStarted = false;
-
-for (var i = 0; i < 10; i++) {
-    for (var j = 0; j < 5; j++) {
-        var brick = new Brick(80 * i, 20 * j);
-        brick.draw();
-        bricks.push(brick);
-    }
-}
-
 function removeBrick(bricks, b) {
     bricks.forEach((a, i, o) => {
         if (a.x == b.x && a.y == b.y) {
@@ -146,11 +123,6 @@ function removeBrick(bricks, b) {
         }
     });
 }
-
-canvas.addEventListener("mousemove", function (event) {
-    var mouseX = event.clientX - canvas.offsetLeft;
-    paddle.updatePosition(mouseX);
-});
 
 function eachframe() {
     if (ball.y + ball.radius > canvas.height) {
@@ -164,7 +136,6 @@ function eachframe() {
     if (ball.y - ball.radius < 0) {
         yspeed *= -1;
     }
-    animation = requestAnimationFrame(eachframe);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -187,6 +158,60 @@ function eachframe() {
 
     ball.draw();
     paddle.draw();
+
+    animation = requestAnimationFrame(eachframe);
 }
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+canvas.width = 800;
+canvas.height = 600;
+
+var paddle = new Paddle();
+var ball = new Ball();
+var bricks = [];
+
+var xspeed = 5;
+var yspeed = -10;
+
+var gameStarted = false;
+
+for (var i = 0; i < 10; i++) {
+    for (var j = 0; j < 5; j++) {
+        var brick = new Brick(80 * i, 20 * j);
+        bricks.push(brick);
+    }
+}
+canvas.addEventListener("mousemove", function (event) {
+    var mouseX = event.clientX - canvas.offsetLeft;
+    paddle.updatePosition(mouseX);
+});
+
+// window.onload = function () {
+//     function draw() {
+//         ctx.clearRect(0, 0, canvas.width, canvas.height);
+//         bricks.forEach((a) => {
+//             a.draw();
+//         });
+//         ball.draw();
+//         paddle.draw();
+//     }
+
+//     function update() {
+//         ball.move(xspeed, yspeed);
+//     }
+
+//     function gameLoop() {
+//         draw();
+//         update();
+//         requestAnimationFrame(gameLoop);
+//     }
+
+//     gameLoop();
+//     eachframe();
+// };
+
+// window.onload = eachframe;
 
 eachframe();
