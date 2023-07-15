@@ -6,11 +6,8 @@ class Paddle {
         this.height = 20;
         this.x = canvas.width / 2 - this.width / 2;
         this.y = canvas.height - this.height - 50;
-        this.speed = 10;
     }
     draw() {
-        // ctx.fillStyle = "green";
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
     updatePosition(mouseX) {
@@ -21,16 +18,11 @@ class Ball {
     constructor() {
         this.image = new Image();
         this.image.src = "/assets/brick_ball.png";
-        this.radius = 10;
+        this.radius = 12;
         this.x = canvas.width / 2;
         this.y = canvas.height / 2;
-        this.speed = 5;
     }
     draw() {
-        // ctx.fillStyle = "blue";
-        // ctx.beginPath();
-        // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-        // ctx.fill();
         ctx.drawImage(
             this.image,
             this.x,
@@ -55,8 +47,6 @@ class Brick {
         this.broken = false;
     }
     draw() {
-        // ctx.fillStyle = "red";
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 }
@@ -69,16 +59,17 @@ function checkCrashPaddle(ball, paddle) {
 
     if (
         inXCoordinate &&
-        ball.y + ball.radius >= paddle.y &&
-        ball.y - ball.radius <= paddle.y + paddle.height
+        ball.y + 2 * ball.radius >= paddle.y &&
+        ball.y - 2 * ball.radius <= paddle.y + paddle.height &&
+        yspeed > 0
     ) {
         rst.dy = -1;
         return rst;
     }
     if (
         inYCoordinate &&
-        ball.x + ball.radius >= paddle.x &&
-        ball.x - ball.radius <= paddle.x + paddle.width
+        ball.x + 2 * ball.radius >= paddle.x &&
+        ball.x - 2 * ball.radius <= paddle.x + paddle.width
     ) {
         rst.dx = -1;
         return rst;
@@ -89,27 +80,25 @@ function checkCrashPaddle(ball, paddle) {
 function checkCrashBrick(ball, brick) {
     var rst = { dx: 1, dy: 1 };
     var inXCoordinate =
-        brick.x <= ball.x + ball.radius &&
-        ball.x - ball.radius <= brick.x + brick.width;
+        brick.x <= ball.x + 2 * ball.radius &&
+        ball.x - 2 * ball.radius <= brick.x + brick.width;
     var inYCoordinate =
-        brick.y <= ball.y + ball.radius &&
-        ball.y - ball.radius <= brick.y + brick.height;
+        brick.y <= ball.y + 2 * ball.radius &&
+        ball.y - 2 * ball.radius <= brick.y + brick.height;
 
     if (
         inXCoordinate &&
-        ball.y + ball.radius >= brick.y &&
-        ball.y - ball.radius <= brick.y + brick.height
+        ball.y + 2 * ball.radius >= brick.y &&
+        ball.y - 2 * ball.radius <= brick.y + brick.height
     ) {
         rst.dy = -1;
-        // return rst;
     }
     if (
         inYCoordinate &&
-        ball.x + ball.radius >= brick.x &&
-        ball.x - ball.radius <= brick.x + brick.width
+        ball.x + 2 * ball.radius >= brick.x &&
+        ball.x - 2 * ball.radius <= brick.x + brick.width
     ) {
         rst.dx = -1;
-        // return rst;
     }
     return rst;
 }
@@ -127,12 +116,10 @@ function levelLayout(level) {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
         [0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
-        [0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     ];
     var level1 = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 1, 1, 1, 1, 0, 0, 1],
         [1, 0, 0, 1, 1, 1, 1, 0, 0, 1],
         [1, 0, 0, 1, 1, 1, 1, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -157,11 +144,40 @@ function levelLayout(level) {
     }
 }
 
+function startGame() {
+    if (!gameStarted) {
+        ball.x = paddle.x + paddle.width / 2 - 2 * ball.radius;
+        ball.y = paddle.y - 2 * ball.radius;
+
+        gameStarted = true;
+        levelLayout(level);
+        eachframe();
+    }
+}
+
 function eachframe() {
-    if (ball.y + ball.radius > canvas.height) {
-        // bottom
+    if (bricks.length === 0) {
+        if (level === 2) {
+            // win
+            // cancelAnimationFrame(animation);
+            gameStarted = false;
+            xspeed = 0;
+            yspeed = 0;
+            return;
+        }
+        // next level
+        // cancelAnimationFrame(animation);
         gameStarted = false;
-        // startButton.style.display = "block";
+        level++;
+        xspeed = 0;
+        yspeed = 0;
+        startGame();
+    }
+    if (ball.y + 2 * ball.radius > canvas.height) {
+        // bottom: GAME OVER
+        gameStarted = false;
+        xspeed = 0;
+        yspeed = 0;
         return;
     }
     if (
@@ -169,10 +185,9 @@ function eachframe() {
         (ball.x + 2 * ball.radius >= canvas.width && xspeed > 0)
     ) {
         // side
-
         xspeed *= -1;
     }
-    if (ball.y - ball.radius < 0) {
+    if (ball.y - 2 * ball.radius < 0) {
         // top
         yspeed *= -1;
     }
@@ -196,7 +211,12 @@ function eachframe() {
     var rst = checkCrashPaddle(ball, paddle);
     xspeed *= rst.dx;
     yspeed *= rst.dy;
-    ball.move(xspeed + Math.random() * 4, yspeed);
+    if (xspeed !== 0 && yspeed !== 0) {
+        ball.move(xspeed + Math.random() * 4, yspeed);
+    } else {
+        ball.x = paddle.x + paddle.width / 2 - ball.radius;
+        ball.y = paddle.y - 2 * ball.radius;
+    }
 
     ball.draw();
     paddle.draw();
@@ -214,33 +234,23 @@ var paddle = new Paddle();
 var ball = new Ball();
 var bricks = [];
 
-var xspeed = 5;
-var yspeed = -9;
+var xspeed = 0;
+var yspeed = 0;
+var level = 0;
 
 var gameStarted = false;
-
-// for (var i = 0; i < 10; i++) {
-//     for (var j = 0; j < 5; j++) {
-//         var brick = new Brick(80 * i + 1, 20 * j + 1);
-//         bricks.push(brick);
-//     }
-// }
-
-var startButton = document.getElementById("startButton");
-
-levelLayout(0);
-eachframe();
-
-// function startGame() {
-//     if (!gameStarted) {
-//         gameStarted = true;
-//         levelLayout(0); // Set up the bricks for the first level or desired level
-//         eachframe(); // Start the animation loop
-//     }
-// }
+// var animation;
 
 canvas.addEventListener("mousemove", function (event) {
     var mouseX = event.clientX - canvas.offsetLeft;
     paddle.updatePosition(mouseX);
 });
-// startButton.addEventListener("click", startGame);
+
+canvas.addEventListener("click", function () {
+    if (gameStarted && xspeed == 0 && yspeed == 0) {
+        xspeed = 5;
+        yspeed = -9;
+    }
+});
+
+startGame();
