@@ -2,15 +2,11 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8" />
-        <link href="styles.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body id="page=top">
         <!-- navigation bar -->
-        <nav
-            class="navbar"
-            id="navbar"
-            style="background-color: rgb(201, 201, 201)"
-        >
+        <nav class="navbar" id="navbar">
             <div class="container">
                 <a class="navbar-logo" href="#page-top">
                     <img src="assets/playjam_logo.png" alt="Logo" width="15%" />
@@ -41,7 +37,7 @@
                 <div class="text-center">
                     <div class="head-title">PLAYJAM</div>
                     <div class="head-desc">게임을 즐기는 재미</div>
-                    <a class="button" href="#games">게임하기</a>
+                    <a class="btn" href="#games">게임하기</a>
                 </div>
             </div>
         </header>
@@ -69,7 +65,7 @@
                     <div class="game-title">Brick Breaker</div>
                 </div>
                 <div class="game-item" style="background-color: blue">
-                    <a class="game-link" href="#game-popup1">
+                    <a class="game-link" href="#game-popup2">
                         <div class="game-hover">
                             <div class="game-hover-content">Brick Game</div>
                         </div>
@@ -82,7 +78,7 @@
                     <div class="game-title">Brick Breaker</div>
                 </div>
                 <div class="game-item" style="background-color: green">
-                    <a class="game-link" href="#game-popup1">
+                    <a class="game-link" href="#game-popup3">
                         <div class="game-hover">
                             <div class="game-hover-content">Brick Game</div>
                         </div>
@@ -107,34 +103,46 @@
             role="dialog"
             aria-hidden="true"
         >
-            <div class="popup-dialog" style="background-color: yellow">
-                <div class="container">
+            <div class="popup-dialog">
+                <div class="container" style="background-color: yellow">
                     <h2>Brick Breaker</h2>
-                    <script>
-                        function loadGameScript() {
-                            var script = document.createElement("script");
-                            script.src = "brick-breaker/src/brick_breaker.js";
-                            document.body.appendChild(script);
-                        }
-                        loadGameScript();
-                    </script>
+                    <script src="brick-breaker/src/brick_breaker.js"></script>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="popup fade"
+            id="game-popup2"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+        >
+            <div class="popup-dialog">
+                <div class="container" style="background-color: yellow">
+                    <h2>Brick Breaker</h2>
+                    <script src="brick-breaker/src/brick_breaker.js"></script>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="popup fade"
+            id="game-popup3"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+        >
+            <div class="popup-dialog">
+                <div class="container" style="background-color: yellow">
+                    <h2>Brick Breaker</h2>
+                    <script src="brick-breaker/src/brick_breaker.js"></script>
                 </div>
             </div>
         </div>
 
         <div class="overlay" id="game-overlay"></div>
 
-        <script>
-            function togglePopup() {
-                var popup = document.getElementById("game-popup1");
-                popup.classList.toggle("show");
-            }
-
-            var gameLink = document.querySelector(".game-link");
-            gameLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                togglePopup();
-            });
-        </script>
+        <script src="js/scripts.js"></script>
     </body>
 </html>
