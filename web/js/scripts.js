@@ -35,16 +35,40 @@ window.addEventListener("DOMContentLoaded", (event) => {
         });
     });
 
-    function togglePopup() {
-        var popup = document.getElementById("game-popup1");
+    function togglePopup(popupId) {
+        console.log(popupId);
+        var popup = document.getElementById(popupId);
+
+        var popups = document.querySelectorAll(".popup .show");
+        popups.forEach(function (otherPopup) {
+            if (otherPopup.id !== popupId) {
+                return;
+            }
+        });
+
+        var isVisiable = popup.classList.contains("show");
+        if (isVisiable) {
+            return;
+        }
         popup.classList.toggle("show");
+        popup.focus();
     }
 
     var gameLinks = document.querySelectorAll(".game-link");
     gameLinks.forEach(function (gameLink) {
         gameLink.addEventListener("click", function (event) {
             event.preventDefault();
-            togglePopup();
+            var popupId = this.getAttribute("href").substring(1);
+            togglePopup(popupId);
+        });
+    });
+
+    var closeButtons = document.querySelectorAll(".popup-close a.btn");
+    closeButtons.forEach(function (closeButton) {
+        closeButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            var popup = this.closest(".popup");
+            popup.classList.remove("show");
         });
     });
 });

@@ -1,7 +1,7 @@
-class Paddle {
+class Paddle1 {
     constructor() {
         this.image = new Image();
-        this.image.src = "brick-breaker/assets/brick_paddle.png";
+        this.image.src = "test-game/assets/brick_paddle.png";
         this.width = 100;
         this.height = 20;
         this.x = canvas.width / 2 - this.width / 2;
@@ -14,10 +14,10 @@ class Paddle {
         this.x = mouseX - this.width / 2;
     }
 }
-class Ball {
+class Ball1 {
     constructor() {
         this.image = new Image();
-        this.image.src = "brick-breaker/assets/brick_ball.png";
+        this.image.src = "test-game/assets/brick_ball.png";
         this.radius = 12;
         this.x = canvas.width / 2;
         this.y = canvas.height / 2;
@@ -36,10 +36,10 @@ class Ball {
         this.y += yspeed;
     }
 }
-class Brick {
+class Brick1 {
     constructor(x, y) {
         this.image = new Image();
-        this.image.src = "brick-breaker/assets/brick_brick.png";
+        this.image.src = "test-game/assets/brick_brick.png";
         this.x = x;
         this.y = y;
         this.width = 78;
@@ -137,7 +137,7 @@ function levelLayout(level) {
     for (var i = 0; i < levelLayout.length; i++) {
         for (var j = 0; j < levelLayout[0].length; j++) {
             if (levelLayout[i][j] == 1) {
-                var brick = new Brick(80 * j + 1, 20 * i + 11);
+                var brick = new Brick1(80 * j + 1, 20 * i + 11);
                 bricks.push(brick);
             }
         }
@@ -224,13 +224,13 @@ function eachframe() {
     animation = requestAnimationFrame(eachframe);
 }
 
-var canvas = document.getElementById("canvas1");
+var canvas = document.getElementById("canvas3");
 var ctx = canvas.getContext("2d");
 
 canvas.width = 800;
 canvas.height = 600;
 
-var paddle = new Paddle();
+var paddle = new Paddle1();
 var ball = new Ball();
 var bricks = [];
 

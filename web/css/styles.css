@@ -6,30 +6,55 @@
     align-items: center;
 }
 
+.gameContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameContainer h2 {
+    align-self: center;
+}
+
+.gameContainer .btn {
+    align-self: flex-end;
+}
+
+.gameContainer .canvasContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 830px;
+    height: 630px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
 .navbar {
     position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
-}
-
-#navbar {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    background-color: #212529;
+    padding: 0.2vw 1vw;
+    background-color: #283038;
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
-    margin-right: 1rem;
+    margin-right: 1vw;
 }
 
 .navbar-menu {
-    padding: 0.75rem;
-    font-size: 0.75rem;
+    display: inline-block;
+    padding: 0.75vw;
+    font-size: 0.75vw;
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -42,14 +67,14 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 1vw;
 } */
 
 .nav-link {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 0.95rem;
+    font-size: 0.95vw;
     color: #fff;
     letter-spacing: 0.0625em;
 }
@@ -76,8 +101,8 @@
 }
 
 .head {
-    padding-top: 10.5rem;
-    padding-bottom: 6rem;
+    padding-top: 10.5vw;
+    padding-bottom: 6vw;
     text-align: center;
     color: #000000;
     background-image: url("../assets/background_img.jpg");
@@ -88,28 +113,28 @@
 }
 
 .head-title {
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     font-style: italic;
-    line-height: 1.5rem;
+    line-height: 1.5vw;
     margin-bottom: 25px;
     font-family: "Roboto", sans-serif;
 }
 
 .head-desc {
-    font-size: 3.25rem;
+    font-size: 3.25vw;
     font-weight: 700;
-    line-height: 3.25rem;
-    margin-bottom: 2rem;
+    line-height: 3.25vw;
+    margin-bottom: 2vw;
     font-family: "Roboto", sans-serif;
 }
 
 .btn {
     display: inline-block;
-    padding: 1.25rem 2.5rem;
+    padding: 1.25vw 2.5vw;
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 1.125rem;
+    font-size: 1.125vw;
     font-weight: 700;
     line-height: 1.5;
     color: #ffffff;
@@ -121,7 +146,7 @@
     vertical-align: middle;
     cursor: pointer;
     border: 1px solid transparent;
-    border-radius: 0.375rem;
+    border-radius: 0.375vw;
     border-color: transparent;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
         border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -138,17 +163,18 @@
     background-color: #ff8c4e;
     border-color: #000000;
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(255, 208, 38, 0.5);
+    box-shadow: 0 0 0 0.25vw rgba(255, 208, 38, 0.5);
 }
 
 .games {
-    padding: 6rem 0;
+    padding: 6vw 0;
     background-color: rgba(248, 249, 250, 1) !important;
 }
 
 .game-icon {
     max-width: 100%;
     height: auto;
+    border-radius: 2.5vw;
 }
 
 .text-center {
@@ -156,37 +182,39 @@
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: 2.5vw;
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1vw;
     text-transform: uppercase;
 }
 
 .section-desc {
-    font-size: 1rem;
+    font-size: 1vw;
     font-weight: 400;
     font-style: italic;
     font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    margin-bottom: 4rem;
+    margin-bottom: 4vw;
     color: #6c757d;
 }
 
 .row {
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
 
 .game-item {
     flex: 0 0 auto;
-    width: 33.33333333%;
-    max-width: 26rem;
+    width: 30%;
+    height: 30%;
+    max-width: 15vw;
+    max-height: 15vw;
     /* flex: 0 0 15% */
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 1.5vw !important;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -202,8 +230,9 @@
     display: flex;
     position: absolute;
     width: 100%;
-    height: 100%;
-    background: rgba(255, 200, 0, 0.9);
+    height: 99%;
+    background: rgba(255, 192, 203, 0.9);
+    border-radius: 2.5vw;
     align-items: center;
     justify-content: center;
     opacity: 0;
@@ -215,57 +244,30 @@
 }
 
 .game-hover-content {
-    font-size: 1.25rem;
-    color: rgb(220, 110, 110);
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 2.2vw;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
 }
 
 .game-title {
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-weight: 700;
+    color: #000000;
     margin-bottom: 0;
-    padding: 1.5rem;
+    padding: 0vw;
     text-align: center;
-    background-color: #fff;
-}
-
-.button {
-    background-color: #00000000;
-    border: none;
-    color: black;
-    padding: 15px 32px;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    transition: all 0.3s ease-out;
-}
-
-.button:hover {
-    background: #738285;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.7);
-    transition: opacity 500ms;
-    visibility: hidden;
-    opacity: 0;
-    z-index: 9998;
-}
-
-.overlay:target {
-    visibility: visible;
-    opacity: 1;
+    background-color: #ff000033;
+    border-radius: 2.5vw;
 }
 
 .popup {
+    display: none;
     position: fixed;
     z-index: 9999;
     top: 50%;
@@ -274,12 +276,12 @@
     background: #fff;
     border-radius: 5px;
     padding: 20px;
-    display: none;
 }
 
 .popup h2 {
     text-align: center;
-    margin-top: 0;
+    margin-top: 10px;
+    margin-bottom: 0px;
     color: #333;
     font-family: Tahoma, Arial, sans-serif;
 }
@@ -300,8 +302,8 @@
 }
 
 .popup .content {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 6vw;
+    padding-bottom: 6vw;
     text-align: center;
 }
 
@@ -320,15 +322,54 @@
 .popup-dialog {
     position: relative;
     width: auto;
-    margin: 1rem;
+    margin: 0;
     max-width: 100vw;
     display: flex;
     flex-direction: column;
     color: #212529;
     pointer-events: auto;
-    background-color: #ffffff;
+    background-color: #ffc3c3;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.175);
-    border-radius: 0.5rem;
+    border-radius: 0.5vw;
     outline: 0;
+}
+
+.popup-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 5px;
+}
+
+.close-btn {
+    display: inline-block;
+    padding: 0;
+    width: 1.2em;
+    height: 1.2em;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1.5vw;
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+    background-color: #ff8c4e;
+    border-color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 0.375vw;
+    border-color: transparent;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

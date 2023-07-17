@@ -9,7 +9,12 @@
         <nav class="navbar" id="navbar">
             <div class="container">
                 <a class="navbar-logo" href="#page-top">
-                    <img src="assets/playjam_logo.png" alt="Logo" width="15%" />
+                    <img
+                        src="assets/playjam_logo.png"
+                        alt="Logo"
+                        width="20%"
+                        min-width="20%"
+                    />
                 </a>
                 <button
                     class="navbar-menu"
@@ -43,7 +48,11 @@
         </header>
 
         <!-- games -->
-        <section class="games" id="games" style="background-color: beige">
+        <section
+            class="games"
+            id="games"
+            style="background-color: rgb(254, 254, 173)"
+        >
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-title">Games</h2>
@@ -51,10 +60,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="game-item" style="background-color: red">
+                <!-- 벽돌깨기 -->
+                <div class="game-item">
                     <a class="game-link" href="#game-popup1">
                         <div class="game-hover">
-                            <div class="game-hover-content">Brick Game</div>
+                            <div class="game-hover-content">Brick Breaker</div>
                         </div>
                         <img
                             class="game-icon"
@@ -64,23 +74,25 @@
                     </a>
                     <div class="game-title">Brick Breaker</div>
                 </div>
-                <div class="game-item" style="background-color: blue">
+                <!-- 넙죽런 -->
+                <div class="game-item">
                     <a class="game-link" href="#game-popup2">
                         <div class="game-hover">
-                            <div class="game-hover-content">Brick Game</div>
+                            <div class="game-hover-content">넙죽런</div>
                         </div>
                         <img
                             class="game-icon"
-                            src="assets/game_icon/brick_game_icon.png"
+                            src="assets/game_icon/neopjuk_run_logo.png"
                             alt="brick game"
                         />
                     </a>
-                    <div class="game-title">Brick Breaker</div>
+                    <div class="game-title">넙죽, 달리다</div>
                 </div>
-                <div class="game-item" style="background-color: green">
+                <!-- 세번째 게임 -->
+                <div class="game-item">
                     <a class="game-link" href="#game-popup3">
                         <div class="game-hover">
-                            <div class="game-hover-content">Brick Game</div>
+                            <div class="game-hover-content">학점을 높여라</div>
                         </div>
                         <img
                             class="game-icon"
@@ -88,7 +100,7 @@
                             alt="brick game"
                         />
                     </a>
-                    <div class="game-title">Brick Breaker</div>
+                    <div class="game-title">학점콜렉터</div>
                 </div>
             </div>
         </section>
@@ -96,6 +108,7 @@
         <!-- team -->
 
         <!-- game popup -->
+        <!-- 벽돌깨기 팝업 -->
         <div
             class="popup fade"
             id="game-popup1"
@@ -104,13 +117,21 @@
             aria-hidden="true"
         >
             <div class="popup-dialog">
-                <div class="container" style="background-color: yellow">
-                    <h2>Brick Breaker</h2>
-                    <script src="brick-breaker/src/brick_breaker.js"></script>
+                <div class="gameContainer">
+                    <div class="popup-header">
+                        <h2>Brick Breaker</h2>
+                        <div class="popup-close">
+                            <a class="btn close-btn" href="#games">&times;</a>
+                        </div>
+                    </div>
+                    <div id="canvasContainer">
+                        <canvas id="canvas1"></canvas>
+                        <script src="brick-breaker/src/brick_breaker.js"></script>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <!-- 넙죽런 팝업 -->
         <div
             class="popup fade"
             id="game-popup2"
@@ -119,13 +140,21 @@
             aria-hidden="true"
         >
             <div class="popup-dialog">
-                <div class="container" style="background-color: yellow">
-                    <h2>Brick Breaker</h2>
-                    <script src="brick-breaker/src/brick_breaker.js"></script>
+                <div class="gameContainer">
+                    <div class="popup-header">
+                        <h2>넙죽런</h2>
+                        <div class="popup-close">
+                            <a class="btn close-btn" href="#games">&times;</a>
+                        </div>
+                    </div>
+                    <div class="canvasContainer">
+                        <canvas id="canvas2"></canvas>
+                        <script src="neopjuk-run/src/main.js"></script>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <!-- 세번째 게임 팝업 -->
         <div
             class="popup fade"
             id="game-popup3"
@@ -134,15 +163,22 @@
             aria-hidden="true"
         >
             <div class="popup-dialog">
-                <div class="container" style="background-color: yellow">
-                    <h2>Brick Breaker</h2>
-                    <script src="brick-breaker/src/brick_breaker.js"></script>
+                <div class="gameContainer">
+                    <div class="popup-header">
+                        <h2>세번째 게임</h2>
+                        <div class="popup-close">
+                            <a class="btn close-btn" href="#games">&times;</a>
+                        </div>
+                    </div>
+                    <div class="canvasContainer">
+                        <canvas id="canvas3"></canvas>
+                        <script src="test-game/src/test_game.js"></script>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="overlay" id="game-overlay"></div>
-
         <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
