@@ -44,7 +44,19 @@ class Brick {
         this.y = y;
         this.width = 78;
         this.height = 18;
-        this.broken = false;
+    }
+    draw() {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
+}
+class Heart {
+    constructor() {
+        this.image = new Image();
+        this.image.src = "brick-breaker/assets/brick_heart.png";
+        this.x = 50;
+        this.y = canvas.height - 40;
+        this.width = 35;
+        this.height = 35;
     }
     draw() {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -172,12 +184,35 @@ function eachframe() {
         xspeed = 0;
         yspeed = 0;
         startGame();
+        return;
     }
     if (ball.y + 2 * ball.radius > canvas.height) {
         // bottom: GAME OVER
         gameStarted = false;
         xspeed = 0;
         yspeed = 0;
+        hearts--;
+        if (hearts > 0) startGame();
+        else {
+            gameStarted = false;
+            isGameOver = true;
+            xspeed = 0;
+            yspeed = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0,0,0,0.4)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = "30px Arial";
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#fff";
+            ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
+            ctx.fillText(
+                "Click to restart",
+                canvas.width / 2,
+                canvas.height / 2 + 40
+            );
+            cancelAnimationFrame(animation);
+        }
         return;
     }
     if (
@@ -221,6 +256,12 @@ function eachframe() {
     ball.draw();
     paddle.draw();
 
+    for (var i = 0; i < hearts; i++) {
+        var h = new Heart();
+        h.x = 10 + i * 40;
+        h.draw();
+    }
+
     animation = requestAnimationFrame(eachframe);
 }
 
@@ -237,6 +278,8 @@ var bricks = [];
 var xspeed = 0;
 var yspeed = 0;
 var level = 0;
+var hearts = 3;
+var isGameOver = false;
 
 var gameStarted = false;
 // var animation;
@@ -249,7 +292,13 @@ canvas.addEventListener("mousemove", function (event) {
 canvas.addEventListener("click", function () {
     if (gameStarted && xspeed == 0 && yspeed == 0) {
         xspeed = 5;
-        yspeed = -9;
+        yspeed = -12;
+    }
+    if (isGameOver && !gameStarted) {
+        hearts = 3;
+        level = 0;
+        isGameOver = false;
+        startGame();
     }
 });
 
