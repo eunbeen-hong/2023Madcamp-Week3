@@ -226,12 +226,6 @@ function eachframe() {
 //   ctx.fillStyle = "gray";
 //   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "black";
-    ctx.font = "20px Arial";
-    ctx.textAlign = "right";
-    ctx.fillText("Highscore: " + highscore, canvas.width - 20, 60);
-    ctx.fillText("Score: " + score, canvas.width - 20, 30);
-
     // 스코어 증가
     if (timer % 60 === 0 && gameStarted) {
         score++;
@@ -310,6 +304,12 @@ function eachframe() {
 
         a.draw();
     });
+
+    ctx.fillStyle = "black";
+    ctx.font = "20px Arial";
+    ctx.textAlign = "right";
+    ctx.fillText("Highscore: " + highscore, canvas.width - 20, 60);
+    ctx.fillText("Score: " + score, canvas.width - 20, 30);
 
     neopjuk.update(); // neopjuk의 update 메서드 호출
     neopjuk.draw(); // neopjuk의 draw 메서드 호출
@@ -520,7 +520,7 @@ canvas.addEventListener("click", function () {
 
 function startGameScreen() {
     var backgroundImage = new Image();
-    backgroundImage.src = "neopjuk_background.jpeg";
+    backgroundImage.src = "../assets/neopjuk_background.jpeg";
 
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "rgba(0, 0, 0, 0.4)";

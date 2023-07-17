@@ -332,3 +332,9 @@
     border-radius: 0.5rem;
     outline: 0;
 }
+
+@media (min-width: 10px){
+    .navbar-logo{
+        min-width: 700px;
+    }
+}
