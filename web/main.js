@@ -1,7 +1,6 @@
 const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
-// const router = require("./routes");
 
 const app = express();
 const port = 3000;
@@ -10,7 +9,6 @@ app.set("view engine", "ejs");
 app.use(express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use("/", router);
 
 app.use((req, res, next) => {
   const url = req.url;
