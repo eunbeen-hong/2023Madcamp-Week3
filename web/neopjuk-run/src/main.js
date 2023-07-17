@@ -3,10 +3,10 @@ var popup = document.getElementById("game-popup2");
 var ctx = canvas.getContext("2d");
 
 function resizeCanvas() {
-    canvas.width = 800;
-    canvas.height = 600;
-    // canvas.width = window.innerWidth * 0.8;
-    // canvas.height = canvas.width * 0.6;
+    // canvas.width = 800;
+    // canvas.height = 600;
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = canvas.width * 0.6;
     drawBackground();
 }
 
