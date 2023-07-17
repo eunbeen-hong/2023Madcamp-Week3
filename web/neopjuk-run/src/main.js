@@ -226,8 +226,6 @@ function eachframe() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackground();
-    //   ctx.fillStyle = "gray";
-    //   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // 스코어 증가
     if (timer % 60 === 0 && gameStarted) {

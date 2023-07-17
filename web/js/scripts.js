@@ -32,6 +32,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
             if (window.getComputedStyle(navbarToggler).display !== "none") {
                 navbarToggler.click();
             }
+
+            // Redirect to the login page
+            window.location.href = "login.html";
         });
     });
 
