@@ -462,6 +462,7 @@ function updateGameView() {
 
     tetris.drawBlock(currentBlock);
 }
+
 function updateGame() {
     if (
         !currentBlock.checkBlockMove(
@@ -487,9 +488,8 @@ function updateGame() {
     }
 
     if (!isGameOver) {
-        setTimeout(updateGame, 1000); // Schedule the next block movement after 1 second
+        setTimeout(updateGame, 1000);
     }
-    // updateGameView(); // Update game view after each block movement
 }
 
 function checkLineFilled() {
