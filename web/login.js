@@ -2,7 +2,7 @@ function loginUser() {
     var form = document.getElementById("login");
     axios({
       method: 'post',
-      url: 'http://localhost:3000/login',
+      url: 'http://localhost:3306/login',
       data: {
         id: form.id.value,
         password: form.password.value

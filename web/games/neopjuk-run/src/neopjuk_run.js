@@ -230,12 +230,7 @@ var treeSpeed = 3; // 장애물의 이동 속도
 var neopjuk = new Neopjuk(); // Neopjuk 클래스의 인스턴스 생성
 
 var score = 0;
-var highscore = localStorage.getItem("highscore");
-if (!highscore) {
-    highscore = 0;
-} else {
-    highscore = parseInt(highscore);
-}
+var highscore = 0;
 
 function eachframe() {
     animation = requestAnimationFrame(eachframe);
@@ -500,8 +495,6 @@ function gameOver() {
     ctx.fillText("Click to restart", canvas.width / 2, canvas.height / 2 + 40);
     neopjuk.isRunning = false;
     cancelAnimationFrame(animation);
-
-    localStorage.setItem("highscore", highscore);
 }
 
 function restart() {
@@ -514,7 +507,7 @@ function restart() {
     neopjuk.width = canvas.height * 0.25;
     neopjuk.height = canvas.height * 0.25;
     neopjuk.jumpCount = 0; // Number of jumps made
-    neopjuk.jumpSpeed = canvas.width * 0.01;
+    neopjuk.jumpSpeed = canvas.width * 0.007;
     neopjuk.gravity = neopjuk.jumpSpeed * 0.025;
     neopjuk.velocity = 0;
     neopjuk.isJumpKeyPressed = false;
