@@ -3,10 +3,10 @@ var popup = document.getElementById("game-popup2");
 var ctx = canvas.getContext("2d");
 
 function resizeCanvas() {
-    // canvas.width = 800;
-    // canvas.height = 600;
-    canvas.width = window.innerWidth * 0.8;
-    canvas.height = canvas.width * 0.6;
+    canvas.width = 800;
+    canvas.height = 600;
+    // canvas.width = window.innerWidth * 0.8;
+    // canvas.height = canvas.width * 0.6;
     drawBackground();
 }
 
@@ -356,6 +356,7 @@ function checkcrash(neopjuk, tree) {
     if (isColliding) {
         gameOver();
         cancelAnimationFrame(animation);
+        return;
     }
 }
 
@@ -377,6 +378,7 @@ function checkcrash2(neopjuk, computer) {
     if (isColliding) {
         gameOver();
         cancelAnimationFrame(animation);
+        return;
     }
 }
 
@@ -398,6 +400,7 @@ function checkcrash3(neopjuk, goose) {
     if (isColliding) {
         gameOver();
         cancelAnimationFrame(animation);
+        return;
     }
 }
 
@@ -517,7 +520,6 @@ canvas.addEventListener("click", function () {
         startGame();
     }
 });
-
 popup.addEventListener("click", function () {
     if (isGameOver) {
         restart();

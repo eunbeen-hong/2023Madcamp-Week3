@@ -265,7 +265,8 @@ function eachframe() {
     animation = requestAnimationFrame(eachframe);
 }
 
-var canvas = document.getElementById("canvas1");
+var canvas = document.getElementById("canvas3");
+var popup = document.getElementById("game-popup3");
 var ctx = canvas.getContext("2d");
 
 canvas.width = 800;
@@ -283,6 +284,15 @@ var isGameOver = false;
 
 var gameStarted = false;
 // var animation;
+
+popup.addEventListener("click", function () {
+    if (isGameOver) {
+        restart();
+        isGameOver = false;
+    } else if (!gameStarted) {
+        startGame();
+    }
+});
 
 canvas.addEventListener("mousemove", function (event) {
     var mouseX = event.clientX - canvas.offsetLeft;
