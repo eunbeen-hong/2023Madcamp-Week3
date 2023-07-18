@@ -21,9 +21,18 @@
                         min-width="20%"
                     />
                 </a>
-                <a class="navbar-menu" onclick="openNewScreen('login.html')">
+                <a
+                    class="navbar-menu"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarResponsive"
+                    aria-controls="navbarResponsive"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                    onclick="location.href='/auth/login'"
+                >
                     메뉴
-                </a>
+            </a>
                 <div class="collapse" id="'navbarResponsive">
                     <ul class="nav-item">
                         <li><a class="nav-link" href="#games">Games</a></li>
