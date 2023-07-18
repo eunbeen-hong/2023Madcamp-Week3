@@ -39,7 +39,7 @@ class Neopjuk {
         this.height = canvas.height * 0.25;
         this.maxJumps = 2; // Maximum number of jumps allowed
         this.jumpCount = 0; // Number of ju   mps made
-        this.jumpSpeed = canvas.width * 0.007;
+        this.jumpSpeed = canvas.width * 0.01;
         this.gravity = this.jumpSpeed * 0.025;
         this.velocity = 0;
         this.isJumpKeyPressed = false;
@@ -230,11 +230,11 @@ var treeSpeed = 3; // 장애물의 이동 속도
 var neopjuk = new Neopjuk(); // Neopjuk 클래스의 인스턴스 생성
 
 var score = 0;
-var highscore = localStorage.getItem("highscore");
-if (!highscore) {
-    highscore = 0;
+var highscore_nr = localStorage.getItem("highscore_nr");
+if (!highscore_nr) {
+    highscore_nr = 0;
 } else {
-    highscore = parseInt(highscore);
+    highscore_nr = parseInt(highscore_nr);
 }
 
 function eachframe() {
@@ -247,8 +247,8 @@ function eachframe() {
     // 스코어 증가
     if (timer % 60 === 0 && gameStarted) {
         score++;
-        if (highscore <= score) {
-            highscore = score;
+        if (highscore_nr <= score) {
+            highscore_nr = score;
         }
     }
     if (timer % 200 === 0 && gameStarted) {
@@ -322,7 +322,7 @@ function eachframe() {
     ctx.fillStyle = "black";
     ctx.font = "20px Arial";
     ctx.textAlign = "right";
-    ctx.fillText("Highscore: " + highscore, canvas.width - 20, 60);
+    ctx.fillText("Highscore: " + highscore_nr, canvas.width - 20, 60);
     ctx.fillText("Score: " + score, canvas.width - 20, 30);
 
     neopjuk.update(); // neopjuk의 update 메서드 호출
@@ -501,7 +501,7 @@ function gameOver() {
     neopjuk.isRunning = false;
     cancelAnimationFrame(animation);
 
-    localStorage.setItem("highscore", highscore);
+    localStorage.setItem("highscore_nr", highscore_nr);
 }
 
 function restart() {
