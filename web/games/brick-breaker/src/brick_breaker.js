@@ -183,7 +183,7 @@ function drawScore() {
 
     // Highscore text
     ctx.strokeText(
-        "Highscore: " + highscore,
+        "Highscore: " + highscore_bb,
         canvas.width - textScale * 10,
         canvas.height - textScale * 30
     );
@@ -200,7 +200,7 @@ function drawScore() {
 
     // Highscore text
     ctx.fillText(
-        "Highscore: " + highscore,
+        "Highscore: " + highscore_bb,
         canvas.width - textScale * 10,
         canvas.height - textScale * 30
     );
@@ -336,11 +336,11 @@ var yspeed = 0;
 var level = 0;
 var hearts = 3;
 var score = 0;
-var highscore = localStorage.getItem("highscore");
-if (highscore === null) {
-    highscore = 0;
+var highscore_bb = localStorage.getItem("highscore_bb");
+if (highscore_bb === null) {
+    highscore_bb = 0;
 } else {
-    highscore = parseInt(highscore);
+    highscore_bb = parseInt(highscore_bb);
 }
 var isGameOver = false;
 

@@ -1,6 +1,40 @@
 var canvas = document.getElementById("canvas3");
 var ctx = canvas.getContext("2d");
 
+function saveHighscoreToServer(_highscore_grade) {
+    // 서버의 URL 설정
+    const url = 'http://localhost:3000/drop-and-catch';
+  
+    // 요청 본문 데이터 생성
+    const data = {
+      highscore_grade: _highscore_grade
+    };
+    console.log(JSON.stringify(data));
+    // fetch를 사용하여 POST 요청 전송
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Highscore sent to the server.');
+        // 성공적으로 요청을 보냈을 때 실행할 코드 작성
+      } else {
+        console.error('Failed to send highscore_grade to the server.', response.status);
+        // 요청을 보내지 못했을 때 실행할 코드 작성
+      }
+    })
+    .catch(error => {
+        console.log(data);
+      console.error('Error while sending highscore_grade:', error);
+      // 요청 전송 중 오류가 발생했을 때 실행할 코드 작성
+    });
+  }
+  
+
 function resizecanvas() {
     canvas.width = 800;
     canvas.height = 600;
@@ -10,6 +44,13 @@ function resizecanvas() {
 }
 
 function drawBackground() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 배경색 그리기
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var backgroundImage = new Image();
@@ -130,8 +171,9 @@ class Grade {
             }
         }
 
-        if (score > highscore) {
-            highscore = score;
+        if (score > highscore_grade) {
+            highscore_grade = score;
+            saveHighscoreToServer(highscore_grade);
         }
     }
 }
@@ -144,11 +186,12 @@ var cloudspeed = 3; // 장애물의 이동 속도
 var neopjuk = new Player(); // Player 클래스의 인스턴스 생성
 
 var score = 0;
-var highscore = localStorage.getItem("highscore");
-if (!highscore) {
-    highscore = 0;
+var highscore_grade = 0;
+var highscore_grade = localStorage.getItem("highscore_grade");
+if (!highscore_grade) {
+    highscore_grade = 0;
 } else {
-    highscore = parseInt(highscore);
+    highscore_grade = parseInt(highscore_grade);
 }
 
 var lives = 3;
@@ -178,8 +221,8 @@ function eachframe() {
     // 스코어 증가
     // if (timer % 60 === 0 && gameStarted) {
     //     score++;
-    //     if (highscore <= score) {
-    //         highscore = score;
+    //     if (highscore_grade <= score) {
+    //         highscore_grade = score;
     //     }
     // }
 
@@ -252,7 +295,7 @@ function eachframe() {
     ctx.fillStyle = "black";
     ctx.textAlign = "right";
     ctx.fillText(
-        "Highscore: " + highscore,
+        "Highscore: " + highscore_grade,
         canvas.width - textScale * 20,
         textScale * 60
     );
@@ -365,8 +408,8 @@ function gameOver() {
     ctx.fillText("Click to restart", canvas.width / 2, canvas.height / 2 + 40);
     cancelAnimationFrame(animation);
 
-    // 로컬 스토리지에 highscore 값을 저장
-    localStorage.setItem("highscore", highscore);
+    // 로컬 스토리지에 highscore_grade 값을 저장
+    localStorage.setItem("highscore_grade", highscore_grade);
 }
 
 function restart() {
@@ -400,11 +443,11 @@ function startGameScreen() {
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    
     ctx.fillStyle = "white";
-
     // 텍스트 크기를 조정할 비율 계산
     var textScale = canvas.width / 800;
-
     // 텍스트 크기 조정
     var textSize = 30 * textScale;
     ctx.font = textSize + "px Arial";

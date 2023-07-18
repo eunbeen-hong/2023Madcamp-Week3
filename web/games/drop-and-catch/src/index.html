@@ -2,11 +2,22 @@
 <html>
     <head>
         <style>
+            body {
+                background-color: #ffc3c3;
+                margin: 0;
+                padding: 0;
+            }
             canvas {
                 position: absolute;
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%, -50%);
+                padding: 30px;
+                border-radius: 2.0vw;
+                background-color: white;
+            }
+            script {
+                border-radius: 2.0vw;
             }
         </style>
         <meta charset="UTF-8" />
@@ -14,7 +25,9 @@
     </head>
 
     <body>
-        <canvas id="canvas3"></canvas>
-        <script src="drop_and_catch.js"></script>
+        <div>
+            <canvas id="canvas3"></canvas>
+            <script src="drop_and_catch.js"></script>
+        </div>
     </body>
 </html>
