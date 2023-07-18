@@ -1,12 +1,11 @@
 var canvas = document.getElementById("canvas3");
-var popup = document.getElementById("game-popup3");
 var ctx = canvas.getContext("2d");
 
-function resizeCanvas() {
-    // canvas.width = 800;
-    // canvas.height = 600;
-    canvas.width = window.innerWidth * 0.8;
-    canvas.height = canvas.width * 0.6;
+function resizecanvas() {
+    canvas.width = 800;
+    canvas.height = 600;
+    // canvas.width = window.innerWidth * 0.8;
+    // canvas.height = canvas.width * 0.6;
     drawBackground();
 }
 
@@ -14,7 +13,8 @@ function drawBackground() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var backgroundImage = new Image();
-    backgroundImage.src = "drop-and-catch/assets/dac_background.jpeg";
+    // backgroundImage.src = "drop-and-catch/assets/dac_background.jpeg";
+    backgroundImage.src = "../assets/dac_background.jpeg";
 
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
@@ -25,13 +25,13 @@ function drawBackground() {
     // ctx.fillRect(0, canvas.height * 0.6, canvas.width, canvas.height * 0.4);
 }
 
-resizeCanvas();
+resizecanvas();
 
 window.addEventListener("resize", function () {
-    resizeCanvas();
+    resizecanvas();
 });
 
-class Neopjuk {
+class Player {
     constructor() {
         this.height = canvas.height * 0.16;
         this.width = this.height * 0.6;
@@ -50,13 +50,15 @@ class Neopjuk {
     }
 
     moveLeft() {
-        if (this.x > 0) { // 왼쪽 끝에 도달하지 않았을 때만 왼쪽으로 이동
+        if (this.x > 0) {
+            // 왼쪽 끝에 도달하지 않았을 때만 왼쪽으로 이동
             this.x -= 5; // 이동할 거리를 원하는 값으로 조정하세요.
         }
     }
 
     moveRight() {
-        if (this.x + this.width < canvas.width) { // 오른쪽 끝에 도달하지 않았을 때만 오른쪽으로 이동
+        if (this.x + this.width < canvas.width) {
+            // 오른쪽 끝에 도달하지 않았을 때만 오른쪽으로 이동
             this.x += 5; // 이동할 거리를 원하는 값으로 조정하세요.
         }
     }
@@ -80,18 +82,29 @@ var img_Cminus = new Image();
 var img_F = new Image();
 var img_life = new Image();
 
-img_neopjuk.src = "drop-and-catch/assets/player.png";
-img_neopjuk2.src = "drop-and-catch/assets/neopjuk2.png";
-img_neopjuk_run.src = "drop-and-catch/assets/neopjuk3.png";
-img_end.src = "drop-and-catch/assets/neopjuk_end.png";
-img_Aplus.src = "drop-and-catch/assets/Aplus.png";
-img_A.src = "drop-and-catch/assets/A.png";
-img_C.src = "drop-and-catch/assets/C.png";
-img_Cminus.src = "drop-and-catch/assets/Cminus.png";
-img_F.src = "drop-and-catch/assets/F.png";
-img_life.src = "drop-and-catch/assets/life.png";
+// img_neopjuk.src = "drop-and-catch/assets/player.png";
+// img_neopjuk2.src = "drop-and-catch/assets/neopjuk2.png";
+// img_neopjuk_run.src = "drop-and-catch/assets/neopjuk3.png";
+// img_end.src = "drop-and-catch/assets/neopjuk_end.png";
+// img_Aplus.src = "drop-and-catch/assets/Aplus.png";
+// img_A.src = "drop-and-catch/assets/A.png";
+// img_C.src = "drop-and-catch/assets/C.png";
+// img_Cminus.src = "drop-and-catch/assets/Cminus.png";
+// img_F.src = "drop-and-catch/assets/F.png";
+// img_life.src = "drop-and-catch/assets/life.png";
 
-class Cloud {
+img_neopjuk.src = "../assets/player.png";
+img_neopjuk2.src = "../assets/neopjuk2.png";
+img_neopjuk_run.src = "../assets/neopjuk3.png";
+img_end.src = "../assets/neopjuk_end.png";
+img_Aplus.src = "../assets/Aplus.png";
+img_A.src = "../assets/A.png";
+img_C.src = "../assets/C.png";
+img_Cminus.src = "../assets/Cminus.png";
+img_F.src = "../assets/F.png";
+img_life.src = "../assets/life.png";
+
+class Grade {
     constructor(x, type, image) {
         this.x = x;
         this.y = 0;
@@ -105,20 +118,19 @@ class Cloud {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
     handleCollision() {
-        if (this.type === "good_grade"){
+        if (this.type === "good_grade") {
             score++;
-        }
-        else if(this.type === "bad_grade"){
+        } else if (this.type === "bad_grade") {
             this.collisionCount++;
             lives--;
 
-            if(this.collisionCount === 3 || lives === 0){
+            if (this.collisionCount === 3 || lives === 0) {
                 gameOver();
                 cancelAnimationFrame(animation);
             }
         }
 
-        if(score > highscore){
+        if (score > highscore) {
             highscore = score;
         }
     }
@@ -129,7 +141,7 @@ var manyclouds = [];
 var animation;
 var cloudspeed = 3; // 장애물의 이동 속도
 
-var neopjuk = new Neopjuk(); // Neopjuk 클래스의 인스턴스 생성
+var neopjuk = new Player(); // Player 클래스의 인스턴스 생성
 
 var score = 0;
 var highscore = localStorage.getItem("highscore");
@@ -141,12 +153,18 @@ if (!highscore) {
 
 var lives = 3;
 
-function drawLives(){
+function drawLives() {
     var lifeSize = canvas.height * 0.1;
-    var margin = canvas.height * 0.07 / 3;
+    var margin = (canvas.height * 0.07) / 3;
 
-    for(var i=0;i<lives;i++){
-        ctx.drawImage(img_life, margin + i * (lifeSize + margin), margin, lifeSize, lifeSize*1.4);
+    for (var i = 0; i < lives; i++) {
+        ctx.drawImage(
+            img_life,
+            margin + i * (lifeSize + margin),
+            margin,
+            lifeSize,
+            lifeSize * 1.4
+        );
     }
 }
 
@@ -169,28 +187,28 @@ function eachframe() {
     var randomValueImage = Math.random();
     if (timer % 50 === 0) {
         var randomY = Math.random();
-        var type = randomValue < 0.5? "bad_grade" : "good_grade";
+        var type = randomValue < 0.5 ? "bad_grade" : "good_grade";
         var image;
-        if (type === "good_grade"){
-            if(randomValueImage < 0.5){
+        if (type === "good_grade") {
+            if (randomValueImage < 0.5) {
                 image = img_Aplus;
-            }
-            else{
+            } else {
                 image = img_A;
             }
-        }
-        else if(type === "bad_grade"){
-            if(randomValueImage < 0.33){
+        } else if (type === "bad_grade") {
+            if (randomValueImage < 0.33) {
                 image = img_C;
-            }
-            else if(randomValueImage < 0.67){
+            } else if (randomValueImage < 0.67) {
                 image = img_Cminus;
-            }
-            else{
+            } else {
                 image = img_F;
             }
         }
-        var cloud = new Cloud(randomY * (canvas.width-canvas.height * 0.25 * 0.7), type, image);
+        var cloud = new Grade(
+            randomY * (canvas.width - canvas.height * 0.25 * 0.7),
+            type,
+            image
+        );
         manyclouds.push(cloud);
     }
 
@@ -202,17 +220,16 @@ function eachframe() {
 
         a.draw();
 
-    // 충돌 감지
-    if (
-        neopjuk.x < a.x + a.width &&
-        neopjuk.x + neopjuk.width > a.x &&
-        neopjuk.y < a.y + a.height &&
-        neopjuk.y + neopjuk.height > a.y
-    ){
-        o.splice(i, 1);
-        a.handleCollision();
-
-    }
+        // 충돌 감지
+        if (
+            neopjuk.x < a.x + a.width &&
+            neopjuk.x + neopjuk.width > a.x &&
+            neopjuk.y < a.y + a.height &&
+            neopjuk.y + neopjuk.height > a.y
+        ) {
+            o.splice(i, 1);
+            a.handleCollision();
+        }
     });
 
     // if (neopjuk.isLeftArrowPressed) {
@@ -234,8 +251,16 @@ function eachframe() {
 
     ctx.fillStyle = "black";
     ctx.textAlign = "right";
-    ctx.fillText("Highscore: " + highscore, canvas.width - textScale*20, textScale * 60);
-    ctx.fillText("Score: " + score, canvas.width - textScale*20, textScale * 30);
+    ctx.fillText(
+        "Highscore: " + highscore,
+        canvas.width - textScale * 20,
+        textScale * 60
+    );
+    ctx.fillText(
+        "Score: " + score,
+        canvas.width - textScale * 20,
+        textScale * 30
+    );
 
     drawLives();
 
@@ -273,13 +298,13 @@ eachframe();
 //     if (neopjuk.isDownArrowPressed) {
 //         var scaledWidth = neopjuk.width * 0.7;
 //         var scaledHeight = neopjuk.height * 0.7;
-//         var adjustedNeopjuk = {
+//         var adjustedPlayer = {
 //             x: neopjuk.x + (neopjuk.width - scaledWidth) / 2,
 //             y: neopjuk.y + (neopjuk.height - scaledHeight),
 //             width: scaledWidth,
 //             height: scaledHeight,
 //         };
-//         isColliding = checkCollision(adjustedNeopjuk, tree);
+//         isColliding = checkCollision(adjustedPlayer, tree);
 //     } else {
 //         isColliding = checkCollision(neopjuk, tree);
 //     }
@@ -295,14 +320,14 @@ var moveLeftInterval;
 document.addEventListener("keydown", function (e) {
     if (e.code === "ArrowLeft" && !neopjuk.isLeftArrowPressed) {
         neopjuk.isLeftArrowPressed = true;
-        moveLeftInterval = setInterval(function() {
+        moveLeftInterval = setInterval(function () {
             neopjuk.moveLeft();
         }, 10);
         neopjuk.moveLeft();
     }
     if (e.code === "ArrowRight" && !neopjuk.isRightArrowPressed) {
         neopjuk.isRightArrowPressed = true;
-        moveRightInterval = setInterval(function() {
+        moveRightInterval = setInterval(function () {
             neopjuk.moveRight();
         }, 10);
         neopjuk.moveRight();
@@ -369,7 +394,8 @@ canvas.addEventListener("click", function () {
 
 function startGameScreen() {
     var backgroundImage = new Image();
-    backgroundImage.src = "drop-and-catch/assets/neopjuk_background.jpeg";
+    // backgroundImage.src = "drop-and-catch/assets/neopjuk_background.jpeg";
+    backgroundImage.src = "../assets/neopjuk_background.jpeg";
 
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
@@ -382,10 +408,14 @@ function startGameScreen() {
     // 텍스트 크기 조정
     var textSize = 30 * textScale;
     ctx.font = textSize + "px Arial";
-    
+
     ctx.textAlign = "center";
     ctx.fillText("Game Start", canvas.width / 2, canvas.height / 2);
-    ctx.fillText("Click to start", canvas.width / 2, canvas.height / 2 + textScale * 40);
+    ctx.fillText(
+        "Click to start",
+        canvas.width / 2,
+        canvas.height / 2 + textScale * 40
+    );
     cancelAnimationFrame(animation);
 }
 

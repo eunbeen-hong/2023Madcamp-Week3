@@ -23,7 +23,7 @@
     align-self: flex-end;
 }
 
-.gameContainer .canvasContainer {
+.canvasContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -267,7 +267,7 @@
 }
 
 .popup {
-    display: none;
+    /* display: none; */
     position: fixed;
     z-index: 9999;
     top: 50%;
@@ -312,11 +312,11 @@
 }
 
 .popup.fade {
-    display: none;
+    /* display: none; */
 }
 
 .popup.show {
-    display: block;
+    /* display: block; */
 }
 
 .popup-dialog {
