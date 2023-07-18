@@ -74,4 +74,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
             popup.classList.remove("show");
         });
     });
+
+    var loadHtml = document.getElementById("game-link");
+    loadHtml.addEventListener("click", function(){
+        window.location.href = "brick-breaker/src/index.html";
+    })
 });
