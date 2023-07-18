@@ -1,5 +1,4 @@
 var canvas = document.getElementById("canvas2");
-var popup = document.getElementById("game-popup2");
 var ctx = canvas.getContext("2d");
 
 function resizeCanvas() {
@@ -14,7 +13,8 @@ function drawBackground() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var backgroundImage = new Image();
-    backgroundImage.src = "neopjuk-run/assets/neopjuk_background.jpeg";
+    // backgroundImage.src = "neopjuk-run/assets/neopjuk_background.jpeg";
+    backgroundImage.src = "../assets/neopjuk_background.jpeg";
 
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
@@ -136,17 +136,29 @@ var img_cloud2 = new Image();
 var img_grass1 = new Image();
 var img_grass2 = new Image();
 
-img_neopjuk.src = "neopjuk-run/assets/neop.png";
-img_kkariyong.src = "neopjuk-run/assets/longobs.png";
-img_computer.src = "neopjuk-run/assets/shortobs.png";
-img_goose.src = "neopjuk-run/assets/goose.png";
-img_neopjuk2.src = "neopjuk-run/assets/neopjuk2.png";
-img_neopjuk_run.src = "neopjuk-run/assets/neopjuk3.png";
-img_end.src = "neopjuk-run/assets/neopjuk_end.png";
-img_cloud1.src = "neopjuk-run/assets/cloud1.png";
-img_cloud2.src = "neopjuk-run/assets/cloud2.png";
-img_grass1.src = "neopjuk-run/assets/grass1.png";
-img_grass2.src = "neopjuk-run/assets/grass2.png";
+// img_neopjuk.src = "neopjuk-run/assets/neop.png";
+// img_kkariyong.src = "neopjuk-run/assets/longobs.png";
+// img_computer.src = "neopjuk-run/assets/shortobs.png";
+// img_goose.src = "neopjuk-run/assets/goose.png";
+// img_neopjuk2.src = "neopjuk-run/assets/neopjuk2.png";
+// img_neopjuk_run.src = "neopjuk-run/assets/neopjuk3.png";
+// img_end.src = "neopjuk-run/assets/neopjuk_end.png";
+// img_cloud1.src = "neopjuk-run/assets/cloud1.png";
+// img_cloud2.src = "neopjuk-run/assets/cloud2.png";
+// img_grass1.src = "neopjuk-run/assets/grass1.png";
+// img_grass2.src = "neopjuk-run/assets/grass2.png";
+
+img_neopjuk.src = "../assets/neop.png";
+img_kkariyong.src = "../assets/longobs.png";
+img_computer.src = "../assets/shortobs.png";
+img_goose.src = "../assets/goose.png";
+img_neopjuk2.src = "../assets/neopjuk2.png";
+img_neopjuk_run.src = "../assets/neopjuk3.png";
+img_end.src = "../assets/neopjuk_end.png";
+img_cloud1.src = "../assets/cloud1.png";
+img_cloud2.src = "../assets/cloud2.png";
+img_grass1.src = "../assets/grass1.png";
+img_grass2.src = "../assets/grass2.png";
 
 class Tree {
     constructor() {
@@ -520,18 +532,11 @@ canvas.addEventListener("click", function () {
         startGame();
     }
 });
-popup.addEventListener("click", function () {
-    if (isGameOver) {
-        restart();
-        isGameOver = false;
-    } else if (!gameStarted) {
-        startGame();
-    }
-});
 
 function startGameScreen() {
     var backgroundImage = new Image();
-    backgroundImage.src = "neopjuk-run/assets/neopjuk_background.jpeg";
+    // backgroundImage.src = "neopjuk-run/assets/neopjuk_background.jpeg";
+    backgroundImage.src = "../assets/neopjuk_background.jpeg";
 
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "rgba(0, 0, 0, 0.4)";

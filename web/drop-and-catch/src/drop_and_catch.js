@@ -1,5 +1,4 @@
-var canvas = document.getElementById("canvas1");
-var popup = document.getElementById("game-popup1");
+var canvas = document.getElementById("canvas3");
 var ctx = canvas.getContext("2d");
 
 function resizecanvas() {
@@ -14,7 +13,8 @@ function drawBackground() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var backgroundImage = new Image();
-    backgroundImage.src = "drop-and-catch/assets/dac_background.jpeg";
+    // backgroundImage.src = "drop-and-catch/assets/dac_background.jpeg";
+    backgroundImage.src = "../assets/dac_background.jpeg";
 
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
@@ -82,16 +82,27 @@ var img_Cminus = new Image();
 var img_F = new Image();
 var img_life = new Image();
 
-img_neopjuk.src = "drop-and-catch/assets/player.png";
-img_neopjuk2.src = "drop-and-catch/assets/neopjuk2.png";
-img_neopjuk_run.src = "drop-and-catch/assets/neopjuk3.png";
-img_end.src = "drop-and-catch/assets/neopjuk_end.png";
-img_Aplus.src = "drop-and-catch/assets/Aplus.png";
-img_A.src = "drop-and-catch/assets/A.png";
-img_C.src = "drop-and-catch/assets/C.png";
-img_Cminus.src = "drop-and-catch/assets/Cminus.png";
-img_F.src = "drop-and-catch/assets/F.png";
-img_life.src = "drop-and-catch/assets/life.png";
+// img_neopjuk.src = "drop-and-catch/assets/player.png";
+// img_neopjuk2.src = "drop-and-catch/assets/neopjuk2.png";
+// img_neopjuk_run.src = "drop-and-catch/assets/neopjuk3.png";
+// img_end.src = "drop-and-catch/assets/neopjuk_end.png";
+// img_Aplus.src = "drop-and-catch/assets/Aplus.png";
+// img_A.src = "drop-and-catch/assets/A.png";
+// img_C.src = "drop-and-catch/assets/C.png";
+// img_Cminus.src = "drop-and-catch/assets/Cminus.png";
+// img_F.src = "drop-and-catch/assets/F.png";
+// img_life.src = "drop-and-catch/assets/life.png";
+
+img_neopjuk.src = "../assets/player.png";
+img_neopjuk2.src = "../assets/neopjuk2.png";
+img_neopjuk_run.src = "../assets/neopjuk3.png";
+img_end.src = "../assets/neopjuk_end.png";
+img_Aplus.src = "../assets/Aplus.png";
+img_A.src = "../assets/A.png";
+img_C.src = "../assets/C.png";
+img_Cminus.src = "../assets/Cminus.png";
+img_F.src = "../assets/F.png";
+img_life.src = "../assets/life.png";
 
 class Grade {
     constructor(x, type, image) {
@@ -380,18 +391,11 @@ canvas.addEventListener("click", function () {
         startGame();
     }
 });
-popup.addEventListener("click", function () {
-    if (isGameOver) {
-        restart();
-        isGameOver = false;
-    } else if (!gameStarted) {
-        startGame();
-    }
-});
 
 function startGameScreen() {
     var backgroundImage = new Image();
-    backgroundImage.src = "drop-and-catch/assets/neopjuk_background.jpeg";
+    // backgroundImage.src = "drop-and-catch/assets/neopjuk_background.jpeg";
+    backgroundImage.src = "../assets/neopjuk_background.jpeg";
 
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "rgba(0, 0, 0, 0.4)";

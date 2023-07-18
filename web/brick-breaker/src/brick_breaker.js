@@ -1,7 +1,7 @@
 class Paddle {
     constructor() {
         this.image = new Image();
-        this.image.src = "brick-breaker/assets/brick_paddle.png";
+        this.image.src = "../assets/brick_paddle.png";
         this.width = 100;
         this.height = 20;
         this.x = canvas.width / 2 - this.width / 2;
@@ -12,12 +12,15 @@ class Paddle {
     }
     updatePosition(mouseX) {
         this.x = mouseX - this.width / 2;
+        if (this.x < 0) this.x = 0;
+        if (this.x > canvas.width - this.width)
+            this.x = canvas.width - this.width;
     }
 }
 class Ball {
     constructor() {
         this.image = new Image();
-        this.image.src = "brick-breaker/assets/brick_ball.png";
+        this.image.src = "../assets/brick_ball.png";
         this.radius = 12;
         this.x = canvas.width / 2;
         this.y = canvas.height / 2;
@@ -39,7 +42,7 @@ class Ball {
 class Brick {
     constructor(x, y) {
         this.image = new Image();
-        this.image.src = "brick-breaker/assets/brick_brick.png";
+        this.image.src = "../assets/brick_brick.png";
         this.x = x;
         this.y = y;
         this.width = 78;
@@ -52,7 +55,7 @@ class Brick {
 class Heart {
     constructor() {
         this.image = new Image();
-        this.image.src = "brick-breaker/assets/brick_heart.png";
+        this.image.src = "../assets/brick_heart.png";
         this.x = 50;
         this.y = canvas.height - 40;
         this.width = 35;
@@ -167,6 +170,88 @@ function startGame() {
     }
 }
 
+function drawScore() {
+    var textScale = canvas.width / 800;
+
+    var textSize = 20 * textScale;
+    ctx.font = textSize + "px Arial";
+    ctx.textAlign = "right";
+
+    // Draw the outline
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 2;
+
+    // Highscore text
+    ctx.strokeText(
+        "Highscore: " + highscore,
+        canvas.width - textScale * 10,
+        canvas.height - textScale * 30
+    );
+
+    // Score text
+    ctx.strokeText(
+        "Score: " + score,
+        canvas.width - textScale * 10,
+        canvas.height - textScale * 10
+    );
+
+    // Draw the filled text
+    ctx.fillStyle = "white";
+
+    // Highscore text
+    ctx.fillText(
+        "Highscore: " + highscore,
+        canvas.width - textScale * 10,
+        canvas.height - textScale * 30
+    );
+
+    // Score text
+    ctx.fillText(
+        "Score: " + score,
+        canvas.width - textScale * 10,
+        canvas.height - textScale * 10
+    );
+}
+
+function drawHearts() {
+    for (var i = 0; i < hearts; i++) {
+        var h = new Heart();
+        h.x = 10 + i * 40;
+        h.draw();
+    }
+}
+
+function drawGameObjects() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#ffb668";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (var i = 0; i < bricks.length; i++) {
+        var rst = checkCrashBrick(ball, bricks[i]);
+        if (rst.dx == -1 || rst.dy == -1) {
+            removeBrick(bricks, bricks[i]);
+        }
+        xspeed *= rst.dx;
+        yspeed *= rst.dy;
+    }
+    bricks.forEach((a) => {
+        a.draw();
+    });
+
+    var rst = checkCrashPaddle(ball, paddle);
+    xspeed *= rst.dx;
+    yspeed *= rst.dy;
+    if (xspeed !== 0 && yspeed !== 0) {
+        ball.move(xspeed + Math.random() * 4, yspeed);
+    } else {
+        ball.x = paddle.x + paddle.width / 2 - ball.radius;
+        ball.y = paddle.y - 2 * ball.radius;
+    }
+
+    ball.draw();
+    paddle.draw();
+}
+
 function eachframe() {
     if (bricks.length === 0) {
         if (level === 2) {
@@ -227,46 +312,16 @@ function eachframe() {
         yspeed *= -1;
     }
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#ffb668";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    drawGameObjects();
 
-    for (var i = 0; i < bricks.length; i++) {
-        var rst = checkCrashBrick(ball, bricks[i]);
-        if (rst.dx == -1 || rst.dy == -1) {
-            removeBrick(bricks, bricks[i]);
-        }
-        xspeed *= rst.dx;
-        yspeed *= rst.dy;
-    }
-    bricks.forEach((a) => {
-        a.draw();
-    });
+    drawHearts();
 
-    var rst = checkCrashPaddle(ball, paddle);
-    xspeed *= rst.dx;
-    yspeed *= rst.dy;
-    if (xspeed !== 0 && yspeed !== 0) {
-        ball.move(xspeed + Math.random() * 4, yspeed);
-    } else {
-        ball.x = paddle.x + paddle.width / 2 - ball.radius;
-        ball.y = paddle.y - 2 * ball.radius;
-    }
-
-    ball.draw();
-    paddle.draw();
-
-    for (var i = 0; i < hearts; i++) {
-        var h = new Heart();
-        h.x = 10 + i * 40;
-        h.draw();
-    }
+    drawScore();
 
     animation = requestAnimationFrame(eachframe);
 }
 
-var canvas = document.getElementById("canvas3");
-var popup = document.getElementById("game-popup3");
+var canvas = document.getElementById("canvas1");
 var ctx = canvas.getContext("2d");
 
 canvas.width = 800;
@@ -280,22 +335,21 @@ var xspeed = 0;
 var yspeed = 0;
 var level = 0;
 var hearts = 3;
+var score = 0;
+var highscore = localStorage.getItem("highscore");
+if (highscore === null) {
+    highscore = 0;
+} else {
+    highscore = parseInt(highscore);
+}
 var isGameOver = false;
 
 var gameStarted = false;
 // var animation;
 
-popup.addEventListener("click", function () {
-    if (isGameOver) {
-        restart();
-        isGameOver = false;
-    } else if (!gameStarted) {
-        startGame();
-    }
-});
-
 canvas.addEventListener("mousemove", function (event) {
-    var mouseX = event.clientX - canvas.offsetLeft;
+    var rect = canvas.getBoundingClientRect();
+    var mouseX = event.offsetX || event.clientX - rect.left;
     paddle.updatePosition(mouseX);
 });
 
