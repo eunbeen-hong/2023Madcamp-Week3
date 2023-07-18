@@ -1,0 +1,1 @@
+INSERT INTO users VALUES("1", "sbp3948", "3948", "sbp3948@gmail.com")
