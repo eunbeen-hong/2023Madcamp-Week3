@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
   if (authCheck.isOwner(req, res)) {
     res.redirect('/main');
   } else {
-    res.redirect('/index2.html');
+    res.redirect('/index.html');
   }
 });
 // 인증 라우터
@@ -52,7 +52,7 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   const url = req.url;
   if (req.url === "/") {
-    req.url = "/index2.html";
+    req.url = "/index.html";
   }
   if (req.url === "/favicon.ico") {
     res.writeHead(404);
