@@ -222,7 +222,7 @@ class Blocks {
             },
         ];
         this.x = Math.floor(horizontalCellCount / 2) - 1;
-        this.y = 0;
+        this.y = -4;
 
         this.block = blocks[type];
     }
@@ -233,7 +233,8 @@ class Blocks {
             if (
                 cellX < 0 ||
                 cellX >= horizontalCellCount ||
-                cellY >= verticalCellCount
+                cellY >= verticalCellCount ||
+                gameView[cellY + 4][cellX].empty === false
             ) {
                 return false;
             }
@@ -243,44 +244,61 @@ class Blocks {
     moveLeft() {
         if (this.checkBlockMove(this.x - 1, this.y, this.angle)) {
             this.x--;
-            refreshGame();
+            updateGameView();
         }
     }
     moveRight() {
         if (this.checkBlockMove(this.x + 1, this.y, this.angle)) {
             this.x++;
-            refreshGame();
+            updateGameView();
         }
     }
     rotate() {
         var newAngle = (this.angle + 1) % 4;
         if (this.checkBlockMove(this.x, this.y, newAngle)) {
             this.angle = newAngle;
-            refreshGame();
+            updateGameView();
         }
     }
     drop() {
         while (this.checkBlockMove(this.x, this.y + 1, this.angle)) {
             this.y++;
-            refreshGame();
+            updateGameView();
         }
+        this.fixBlock();
         currentBlock = nextBlock;
         nextBlock = getNewBlock();
-        refreshGame();
+        updateGameView();
     }
     dropByOne() {
         if (this.checkBlockMove(this.x, this.y + 1, this.angle)) {
             this.y++;
+            updateGameView();
         } else {
+            console.log("dropped and fixed");
             this.fixBlock();
+            checkLineFilled();
+            if (checkGameOver()) {
+                isGameOver = true;
+                updateGameView();
+            } else {
+                currentBlock = nextBlock;
+                nextBlock = getNewBlock();
+                updateGameView();
+            }
         }
-        this.checkLineFilled();
+
+        // setTimeout(() => {
+        //     if (!isGameOver) {
+        //         this.dropByOne();
+        //     }
+        // }, 1000);
     }
     fixBlock() {
         for (var i = 0; i < this.block.shape[this.angle].length; i++) {
             var cellX = this.x + this.block.shape[this.angle][i][0];
             var cellY = this.y + this.block.shape[this.angle][i][1];
-            gameView[cellY][cellX] = {
+            gameView[cellY + 4][cellX] = {
                 empty: false,
                 color: this.block.color,
                 highlight: this.block.highlight,
@@ -292,7 +310,7 @@ class Blocks {
         for (var i = 0; i < verticalCellCount; i++) {
             var filled = true;
             for (var j = 0; j < horizontalCellCount; j++) {
-                if (gameView[i][j].empty) {
+                if (gameView[i + 4][j].empty) {
                     filled = false;
                 }
             }
@@ -304,13 +322,14 @@ class Blocks {
 
                 for (var k = i; k > 0; k--) {
                     for (var l = 0; l < horizontalCellCount; l++) {
-                        gameView[k][l] = gameView[k - 1][l];
+                        gameView[k + 4][l] = gameView[k + 4 - 1][l];
                     }
                 }
             }
         }
     }
 }
+
 class Tetris {
     constructor() {
         this.stageWidth = canvas.width;
@@ -321,10 +340,16 @@ class Tetris {
     }
 
     drawBlock(block) {
-        for (var i = 0; i < block.block.shape[angle].length; i++) {
-            this.drawCell(block, block.x, block.y);
+        for (var i = 0; i < block.block.shape[block.angle].length; i++) {
+            this.drawCell(
+                block,
+                (block.x + block.block.shape[block.angle][i][0]) *
+                    this.cellSize,
+                (block.y + block.block.shape[block.angle][i][1]) * this.cellSize
+            );
         }
     }
+
     drawCell(block, x, y) {
         ctx.fillStyle = block.block.color;
         ctx.fillRect(x, y, this.cellSize, this.cellSize);
@@ -394,12 +419,6 @@ function clearGame() {
     ctx.fillRect(0, 0, this.stageWidth, this.stageHeight);
 }
 
-function refreshGame() {
-    clearGame();
-    tetris.drawBlocks(currentBlock);
-    drawScore();
-}
-
 function getNewBlock() {
     return new Blocks(
         Math.floor(Math.random() * 7),
@@ -407,25 +426,42 @@ function getNewBlock() {
     );
 }
 
-function updateGameView() {
-    clearGame();
-    drawBlocks();
-    drawScore();
-}
-
 function drawBlocks() {
     for (var i = 0; i < verticalCellCount; i++) {
         for (var j = 0; j < horizontalCellCount; j++) {
-            var cell = gameView[i][j];
-            if (!cell.empty) {
-                var x = j * tetris.cellSize;
-                var y = i * tetris.cellSize;
-                tetris.drawCell(cell, x, y);
-            }
+            var cell = gameView[i + 4][j];
+            var x = j * tetris.cellSize;
+            var y = i * tetris.cellSize;
+
+            // Draw the cell
+            ctx.fillStyle = cell.empty ? "black" : cell.color;
+            ctx.fillRect(x, y, tetris.cellSize, tetris.cellSize);
+
+            // Draw the cell borders
+            ctx.strokeStyle = cell.highlight;
+            ctx.beginPath();
+            ctx.moveTo(x, y + tetris.cellSize);
+            ctx.lineTo(x, y);
+            ctx.lineTo(x + tetris.cellSize, y);
+            ctx.stroke();
+
+            ctx.strokeStyle = cell.shadow;
+            ctx.beginPath();
+            ctx.moveTo(x, y + tetris.cellSize);
+            ctx.lineTo(x + tetris.cellSize, y + tetris.cellSize);
+            ctx.lineTo(x + tetris.cellSize, y);
+            ctx.stroke();
         }
     }
 }
 
+function updateGameView() {
+    clearGame();
+    drawBlocks();
+    drawScore();
+
+    tetris.drawBlock(currentBlock);
+}
 function updateGame() {
     if (
         !currentBlock.checkBlockMove(
@@ -437,29 +473,37 @@ function updateGame() {
         currentBlock.fixBlock();
         checkLineFilled();
         if (checkGameOver()) {
-            gameOver = true;
+            isGameOver = true;
+            updateGameView();
+            return;
         } else {
             currentBlock = nextBlock;
             nextBlock = getNewBlock();
+            updateGameView();
         }
     } else {
         currentBlock.dropByOne();
+        updateGameView();
     }
-    updateGameView();
+
+    if (!isGameOver) {
+        setTimeout(updateGame, 1000); // Schedule the next block movement after 1 second
+    }
+    // updateGameView(); // Update game view after each block movement
 }
 
 function checkLineFilled() {
     for (var i = verticalCellCount - 1; i >= 0; i--) {
         var filled = true;
         for (var j = 0; j < horizontalCellCount; j++) {
-            if (gameView[i][j].empty) {
+            if (gameView[i + 4][j].empty) {
                 filled = false;
                 break;
             }
         }
         if (filled) {
             score++;
-            if (score > highscore) {
+            if (score >= highscore) {
                 highscore = score;
                 localStorage.setItem("highscore", highscore);
             }
@@ -471,39 +515,62 @@ function checkLineFilled() {
 
 function moveLinesDown(row) {
     for (var i = row; i > 0; i--) {
-        for (var j = 0; j < horizontalCellCount; j++) {
-            gameView[i][j] = gameView[i - 1][j];
-        }
+        gameView[i + 4] = gameView[i + 4 - 1].slice(); // Copy the row using slice
     }
+
     // Clear the top row
-    for (var j = 0; j < horizontalCellCount; j++) {
-        gameView[0][j] = {
-            empty: true,
-            color: "black",
-            highlight: "gray",
-            shadow: "white",
-        };
-    }
+    gameView[4] = new Array(horizontalCellCount).fill({
+        empty: true,
+        color: "black",
+        highlight: "gray",
+        shadow: "white",
+    });
 }
 
 function checkGameOver() {
     var block = currentBlock.block;
     var angle = currentBlock.angle;
+
     for (var i = 0; i < block.shape[angle].length; i++) {
         var cellX = currentBlock.x + block.shape[angle][i][0];
         var cellY = currentBlock.y + block.shape[angle][i][1];
-        if (!currentBlock.checkBlockMove(cellX, cellY, angle)) {
+
+        if (cellY === 0) {
             return true;
         }
     }
+
+    // Additional condition to check the top cell
+    if (currentBlock.y <= 0) {
+        return true;
+    }
+
     return false;
 }
 
 function startGame() {
-    gameOver = false;
+    isGameOver = false;
     score = 0;
+    gameView = initializeGameView(); // Reset the game view
+    currentBlock = getNewBlock();
+    nextBlock = getNewBlock();
     updateGameView();
     eachframe();
+}
+function initializeGameView() {
+    var view = new Array(verticalCellCount + 4);
+    for (var i = 0; i < view.length; i++) {
+        view[i] = new Array(horizontalCellCount);
+        for (var j = 0; j < view[i].length; j++) {
+            view[i][j] = {
+                empty: true,
+                color: "black",
+                highlight: "gray",
+                shadow: "white",
+            };
+        }
+    }
+    return view;
 }
 
 document.addEventListener("keydown", function (event) {
@@ -519,9 +586,8 @@ document.addEventListener("keydown", function (event) {
 });
 
 function eachframe() {
-    if (gameOver) {
+    if (isGameOver) {
         gameStarted = false;
-        isGameOver = true;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "rgba(0,0,0,0.4)";
@@ -540,8 +606,8 @@ function eachframe() {
     }
 
     updateGame();
-
-    requestAnimationFrame(eachframe);
+    // requestAnimationFrame(eachframe);
+    setTimeout(eachframe, 1000);
 }
 
 var canvas = document.getElementById("canvas4");
@@ -557,7 +623,7 @@ var tetris = new Tetris();
 var currentBlock = getNewBlock();
 var nextBlock = getNewBlock();
 
-var gameOver = false;
+var isGameOver = false;
 var score = 0;
 var highscore = localStorage.getItem("highscore");
 if (highscore === null) {
@@ -566,17 +632,12 @@ if (highscore === null) {
     highscore = parseInt(highscore);
 }
 
-var gameView = new Array(verticalCellCount);
-for (var i = 0; i < gameView.length; i++) {
-    gameView[i] = new Array(horizontalCellCount);
-    for (var j = 0; j < gameView[i].length; j++) {
-        gameView[i][j] = {
-            empty: true,
-            color: "black",
-            highlight: "gray",
-            shadow: "white",
-        };
+var gameView = initializeGameView();
+
+canvas.addEventListener("click", function () {
+    if (isGameOver) {
+        startGame();
     }
-}
+});
 
 startGame();
