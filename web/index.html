@@ -5,7 +5,7 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script>
             function openNewScreen(url) {
-                var newWindow = window.open("games/" + url, "_top");
+                var newWindow = window.open(url, "_top");
             }
         </script>
     </head>
@@ -21,18 +21,9 @@
                         min-width="20%"
                     />
                 </a>
-                <button
-                    class="navbar-menu"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarResponsive"
-                    aria-controls="navbarResponsive"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                    onclick="location.href='login.html'"
-                >
+                <a class="navbar-menu" onclick="openNewScreen('login.html')">
                     메뉴
-                </button>
+                </a>
                 <div class="collapse" id="'navbarResponsive">
                     <ul class="nav-item">
                         <li><a class="nav-link" href="#games">Games</a></li>
@@ -70,7 +61,7 @@
                 <div class="game-item">
                     <a
                         class="game-link"
-                        onclick="openNewScreen('brick-breaker/src/index.html')"
+                        onclick="openNewScreen('games/brick-breaker/src/index.html')"
                     >
                         <div class="game-hover">
                             <div class="game-hover-content">Brick Breaker</div>
@@ -87,7 +78,7 @@
                 <div class="game-item">
                     <a
                         class="game-link"
-                        onclick="openNewScreen('neopjuk-run/src/index.html')"
+                        onclick="openNewScreen('games/neopjuk-run/src/index.html')"
                     >
                         <div class="game-hover">
                             <div class="game-hover-content">넙죽런</div>
@@ -104,7 +95,7 @@
                 <div class="game-item">
                     <a
                         class="game-link"
-                        onclick="openNewScreen('drop-and-catch/src/index.html')"
+                        onclick="openNewScreen('games/drop-and-catch/src/index.html')"
                     >
                         <div class="game-hover">
                             <div class="game-hover-content">학점을 높여라</div>
