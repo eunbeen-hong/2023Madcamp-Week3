@@ -372,3 +372,14 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.logined-text {
+    color: white;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .logined-text-visible {
+    display: inline-block;
+  }
