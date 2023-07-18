@@ -21,12 +21,12 @@ app.use(
     })
 );
 
-app.get("/", (req, res) => {
-    if (authCheck.isOwner(req, res)) {
-        res.redirect("/main");
-    } else {
-        res.redirect("/index2.html");
-    }
+app.get('/', (req, res) => {
+  if (authCheck.isOwner(req, res)) {
+    res.redirect('/main');
+  } else {
+    res.redirect('/index.html');
+  }
 });
 // 인증 라우터
 app.use("/auth", authRouter);
@@ -53,15 +53,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    const url = req.url;
-    if (req.url === "/") {
-        req.url = "/index2.html";
-    }
-    if (req.url === "/favicon.ico") {
-        res.writeHead(404);
-        return res.end();
-    }
-    next();
+  const url = req.url;
+  if (req.url === "/") {
+    req.url = "/index.html";
+  }
+  if (req.url === "/favicon.ico") {
+    res.writeHead(404);
+    return res.end();
+  }
+  next();
 });
 
 app.use((req, res) => {

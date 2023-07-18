@@ -11,7 +11,7 @@ module.exports = {
   
           body {
               font-family: 'Noto Sans KR', sans-serif;
-              background-color: #AAA2C2;
+              background-color: #FFEADD;
               margin: 50px;
   
           }
@@ -47,13 +47,13 @@ module.exports = {
           .login:focus,
           .login:hover {
               outline: none;
-              border-bottom-color: #6A679E;
+              border-bottom-color: ;
           }
   
           .btn {            
               border: none;
               width: 75%;
-              background-color: #6A679E;
+              background-color: #FCAEAE;
               color: white;
               padding: 15px 0;
               font-weight: 600;
@@ -62,7 +62,7 @@ module.exports = {
               transition: .2s;
           }
           .btn:hover {
-              background-color: #595787;
+              background-color: #FF8989;
           }
       </style>
       </head>
