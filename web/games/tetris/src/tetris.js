@@ -273,6 +273,7 @@ class Blocks {
     dropByOne() {
         if (this.checkBlockMove(this.x, this.y + 1, this.angle)) {
             this.y++;
+            checkLineFilled();
             updateGameView();
         } else {
             console.log("dropped and fixed");
@@ -287,12 +288,6 @@ class Blocks {
                 updateGameView();
             }
         }
-
-        // setTimeout(() => {
-        //     if (!isGameOver) {
-        //         this.dropByOne();
-        //     }
-        // }, 1000);
     }
     fixBlock() {
         for (var i = 0; i < this.block.shape[this.angle].length; i++) {
@@ -463,7 +458,7 @@ function updateGameView() {
     tetris.drawBlock(currentBlock);
 }
 
-function updateGame() {
+async function updateGame() {
     if (
         !currentBlock.checkBlockMove(
             currentBlock.x,
@@ -488,7 +483,9 @@ function updateGame() {
     }
 
     if (!isGameOver) {
-        setTimeout(updateGame, 1000);
+        setTimeout(() => {
+            updateGame();
+        }, 1000000000);
     }
 }
 
@@ -585,7 +582,7 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-function eachframe() {
+async function eachframe() {
     if (isGameOver) {
         gameStarted = false;
 
@@ -607,7 +604,9 @@ function eachframe() {
 
     updateGame();
     // requestAnimationFrame(eachframe);
-    setTimeout(eachframe, 1000);
+    setTimeout(() => {
+        eachframe();
+    }, 1000);
 }
 
 var canvas = document.getElementById("canvas4");
