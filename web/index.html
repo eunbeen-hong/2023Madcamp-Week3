@@ -48,6 +48,26 @@
                 <div class="text-center">
                     <div class="head-title">PLAYJAM</div>
                     <div class="head-desc">게임을 즐기는 재미</div>
+                    <div class="login-status">
+                        <script>
+                            // JavaScript code to update the login status text
+                            window.addEventListener('DOMContentLoaded', () => {
+                                fetch('/auth/check-login') // Make a request to check the login status
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const loginStatusElement = document.querySelector('.login-status');
+                                        if (data.loggedIn) {
+                                            loginStatusElement.innerText = 'You are logged in';
+                                        } else {
+                                            loginStatusElement.innerText = 'You are not logged in';
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error checking login status:', error);
+                                    });
+                            });
+                        </script>
+                    </div>
                     <a class="btn" href="#games">게임하기</a>
                 </div>
             </div>
