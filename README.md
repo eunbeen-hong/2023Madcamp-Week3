@@ -18,6 +18,13 @@ PLAYJAM은 네가지의 미니게임을 즐길 수 있는 웹사이트입니다.
 
 ## 기능 (Features)
 
+### 로그인 / 회원가입
+이메일과 비밀번호를 입력해 회원가입하고 로그인할 수 있습니다.
+
+<img width="40%" alt="login" src="https://github.com/pancakesontuesday/2023Madcamp-Week3/assets/128043904/c7c496bb-81ac-4051-8eb3-3ff9010f076f">
+<img width="40%" alt="signup" src="https://github.com/pancakesontuesday/2023Madcamp-Week3/assets/128043904/bdc6d3fc-439e-46bc-b405-17a05aaa284d">
+
+
 ### 벽돌깨기
 마우스를 이용해 패들을 움직이고, 공을 튕겨 벽돌을 부수세요! 3번의 생명 안에 세개의 레벨을 깨야 합니다!
 
