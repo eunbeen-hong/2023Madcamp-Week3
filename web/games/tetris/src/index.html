@@ -2,21 +2,38 @@
 <html>
     <head>
         <style>
+            body {
+                background-color: #ffc3c3;
+                margin: 0;
+                padding: 0;
+            }
             canvas {
                 position: absolute;
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%, -50%);
+                padding: 30px;
+                border-radius: 2vw;
+                background-color: white;
+            }
+            script {
+                border-radius: 2vw;
             }
         </style>
         <meta charset="UTF-8" />
-        <title>Document</title>
+        <title>테트리스</title>
     </head>
 
     <body>
+        <div>
+            <a id="title"> 테트리스 </a>
+        </div>
         <div id="canvasContainer">
             <canvas id="canvas4"></canvas>
             <script src="tetris.js"></script>
+        </div>
+        <div>
+            <a id="desc"> 방향키로 블록을 움직이고, 빠르게 내려놓으세요! </a>
         </div>
     </body>
 </html>

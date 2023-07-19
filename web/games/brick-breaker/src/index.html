@@ -13,16 +13,27 @@
                 top: 50%;
                 transform: translate(-50%, -50%);
                 padding: 30px;
-                border-radius: 2.0vw;
+                border-radius: 2vw;
                 background-color: white;
+            }
+            script {
+                border-radius: 2vw;
             }
         </style>
         <meta charset="UTF-8" />
-        <title>Document</title>
+        <title>벽돌 부수기</title>
     </head>
 
     <body>
+        <div>
+            <a id="title"> 벽돌 부수기 </a>
+        </div>
         <canvas id="canvas1"></canvas>
         <script src="brick_breaker.js"></script>
+        <div>
+            <a id="desc">
+                마우스를 이용해 패들을 움직이고, 공을 튕겨 벽돌을 부수세요!
+            </a>
+        </div>
     </body>
 </html>

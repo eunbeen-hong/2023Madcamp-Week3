@@ -311,8 +311,8 @@ class Blocks {
             }
             if (filled) {
                 score++;
-                if (score >= highscore) {
-                    highscore = score;
+                if (score >= highscore_tt) {
+                    highscore_tt = score;
                 }
 
                 for (var k = i; k > 0; k--) {
@@ -366,7 +366,7 @@ class Tetris {
 }
 
 function drawScore() {
-    var textScale = canvas.width / 800;
+    var textScale = canvas.width / 500;
 
     var textSize = 20 * textScale;
     ctx.font = textSize + "px Arial";
@@ -378,7 +378,7 @@ function drawScore() {
 
     // Highscore text
     ctx.strokeText(
-        "Highscore: " + highscore,
+        "Highscore: " + highscore_tt,
         canvas.width - textScale * 10,
         canvas.height - textScale * 30
     );
@@ -395,7 +395,7 @@ function drawScore() {
 
     // Highscore text
     ctx.fillText(
-        "Highscore: " + highscore,
+        "Highscore: " + highscore_tt,
         canvas.width - textScale * 10,
         canvas.height - textScale * 30
     );
@@ -425,8 +425,8 @@ function drawBlocks() {
     for (var i = 0; i < verticalCellCount; i++) {
         for (var j = 0; j < horizontalCellCount; j++) {
             var cell = gameView[i + 4][j];
-            var x = j * tetris.cellSize;
-            var y = i * tetris.cellSize;
+            var x = j * tetris.cellSize; // Adjust x position
+            var y = i * tetris.cellSize; // Adjust y position
 
             // Draw the cell
             ctx.fillStyle = cell.empty ? "black" : cell.color;
@@ -500,9 +500,9 @@ function checkLineFilled() {
         }
         if (filled) {
             score++;
-            if (score >= highscore) {
-                highscore = score;
-                localStorage.setItem("highscore", highscore);
+            if (score >= highscore_tt) {
+                highscore_tt = score;
+                localStorage.setItem("highscore_tt", highscore_tt);
             }
             moveLinesDown(i);
             i++; // Recheck the current row after moving down
@@ -612,7 +612,7 @@ async function eachframe() {
 var canvas = document.getElementById("canvas4");
 var ctx = canvas.getContext("2d");
 
-canvas.width = 800;
+canvas.width = 400;
 canvas.height = 600;
 
 var horizontalCellCount = 10;
@@ -624,11 +624,11 @@ var nextBlock = getNewBlock();
 
 var isGameOver = false;
 var score = 0;
-var highscore = localStorage.getItem("highscore");
-if (highscore === null) {
-    highscore = 0;
+var highscore_tt = localStorage.getItem("highscore_tt");
+if (highscore_tt === null) {
+    highscore_tt = 0;
 } else {
-    highscore = parseInt(highscore);
+    highscore_tt = parseInt(highscore_tt);
 }
 
 var gameView = initializeGameView();

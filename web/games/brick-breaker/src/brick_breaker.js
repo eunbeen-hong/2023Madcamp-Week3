@@ -122,6 +122,11 @@ function removeBrick(bricks, b) {
     bricks.forEach((a, i, o) => {
         if (a.x == b.x && a.y == b.y) {
             o.splice(i, 1);
+            score += 1;
+            if (score > highscore_bb) {
+                highscore_bb = score;
+                localStorage.setItem("highscore_bb", highscore_bb);
+            }
         }
     });
 }
@@ -359,8 +364,10 @@ canvas.addEventListener("click", function () {
         yspeed = -12;
     }
     if (isGameOver && !gameStarted) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         hearts = 3;
         level = 0;
+        score = 0;
         isGameOver = false;
         startGame();
     }
