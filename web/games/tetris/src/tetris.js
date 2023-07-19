@@ -485,7 +485,7 @@ async function updateGame() {
     if (!isGameOver) {
         setTimeout(() => {
             updateGame();
-        }, 1000000000);
+        }, 100000);
     }
 }
 
