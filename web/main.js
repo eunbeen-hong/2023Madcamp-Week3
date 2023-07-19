@@ -39,7 +39,6 @@ app.put('/drop-and-catch', (req, res) => {
   const { highscore_grade } = req.body;
   const { userinfo } = req.session;
 
-  console.log(highscore_grade);
   // 예를 들어, 로그인한 사용자의 아이디를 저장하고 싶은 경우:
   const { userId } = userinfo;
 
@@ -145,14 +144,7 @@ app.get("/main", (req, res) => {
         res.redirect("/auth/login");
         return false;
     }
-    var html = template.HTML(
-        "Welcome",
-        `<hr>
-      <h2> 메인 페이지에 오신 것을 환영합니다</h2>
-      <p> 로그인에 성공하셨습니다.</p>`,
-        authCheck.statusUI(req, res)
-    );
-    res.send(html);
+    res.redirect("/index.html");
 });
 
 app.set("view engine", "ejs");
