@@ -3,7 +3,7 @@
 
 ## 개발자 (Developers)
 
-- [홍은빈](https://github.com/pancakesontuesday), [박성빈](https://github.com/Hello4545)
+- [홍은빈](https://github.com/eunbeen-hong), [박성빈](https://github.com/Hello4545)
 
 
 ## 소개 (Introduction)
